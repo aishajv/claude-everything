@@ -12,8 +12,14 @@ More skills coming soon — coding conventions, engineering guardrails, layer ru
 
 ## Install
 
+Install all skills:
 ```bash
 npx skills add aishajv/claude-everything
+```
+
+Install a specific skill:
+```bash
+npx skills add aishajv/claude-everything --skill testing-guidelines
 ```
 
 ## Stack
