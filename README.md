@@ -24,7 +24,3 @@ These skills are opinionated for:
 - SQLAlchemy + Alembic
 - Pydantic v2
 - pytest + factory_boy
-
-## License
-
-MIT
