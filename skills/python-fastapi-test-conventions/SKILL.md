@@ -1,5 +1,5 @@
 ---
-name: testing-guidelines
+name: python-fastapi-test-conventions
 description: This skill should be used when writing unit tests, integration tests, creating test factories, mocking dependencies, or reviewing test coverage. Covers test pyramid, conventions, factories, and per-layer rules.
 ---
 

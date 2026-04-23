@@ -6,7 +6,7 @@ Reusable Claude Code skills for Python/FastAPI backend projects.
 
 | Skill | What it covers |
 |---|---|
-| `testing-guidelines` | Test pyramid, conventions, factories, and per-layer test rules |
+| `python-fastapi-test-conventions` | Test pyramid, conventions, factories, and per-layer test rules |
 
 More skills coming soon — coding conventions, engineering guardrails, layer rules, migrations, and git workflow.
 
@@ -19,7 +19,7 @@ npx skills add aishajv/claude-everything
 
 Install a specific skill:
 ```bash
-npx skills add aishajv/claude-everything --skill testing-guidelines
+npx skills add aishajv/claude-everything --skill python-fastapi-test-conventions
 ```
 
 ## Stack
