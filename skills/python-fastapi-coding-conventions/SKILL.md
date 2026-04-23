@@ -1,5 +1,5 @@
 ---
-name: coding-conventions
+name: python-fastapi-coding-conventions
 description: This skill should be used when creating a service class, adding an API route, defining Pydantic schemas, writing error handling, or reviewing code style. Covers style, naming, error handling, logging, configuration, database, and API conventions.
 ---
 
