@@ -54,10 +54,10 @@ Test pyramid, conventions, and rules for the backend codebase.
 - **Assert every input field** — including foreign keys like `tenant_id`
 
 - **Never call `session.flush()` in tests** — `flush()` sends pending SQL to the database without committing.
-  In tests with transaction rollback, this can cause confusing behavior — your test might pass because `flush()` made
+  In tests with transaction rollback, this can cause confusing behavior — the test might pass because `flush()` made
   data visible within the same session, but in production (where `commit()` is used), the behavior could differ.
 
-  The only exception is constraint violation tests — you *need* `flush()` there because `IntegrityError` only fires
+  The only exception is constraint violation tests — `flush()` is required there because `IntegrityError` only fires
   when SQL actually hits the database:
 
   ```python
@@ -81,7 +81,7 @@ Test pyramid, conventions, and rules for the backend codebase.
 
 - **Inject mock repos via constructor** — pass `Mock(spec=UserRepository)` directly. Never use `@patch` for repos.
   Constructor injection makes dependencies explicit and testable. `@patch` hides what's being mocked and
-  breaks when you rename or move modules.
+  breaks when modules are renamed or moved.
 
   ```python
   # Bad — @patch hides the dependency, fragile to refactoring
@@ -121,9 +121,9 @@ Test pyramid, conventions, and rules for the backend codebase.
 ### Domain tests
 
 - Pure unit tests, no mocks, no DB.
-  Only write domain tests when your domain entities contain actual business logic
-  (validation, calculations, state transitions). If your entities are plain data
-  containers (just dataclasses with fields), there's nothing to test.
+  Only write domain tests when domain entities contain actual business logic
+  (validation, calculations, state transitions). Plain data containers
+  (dataclasses with fields only) have nothing to test.
 
 ---
 
@@ -216,10 +216,58 @@ Test pyramid, conventions, and rules for the backend codebase.
 
 ## Test Infrastructure
 
-- **Tests require a running PostgreSQL instance** — start your local database before running tests
+- **Tests require a running PostgreSQL instance** — start a local database before running tests
   (e.g., via Docker Compose, a Makefile target, or a local Postgres installation)
 
 - **pytest** as test runner, SQLAlchemy session per test (rolled back), FastAPI `TestClient` for integration, factory_boy
+
+### conftest.py Setup
+
+The root `conftest.py` wires together the session, factories, and test client. Every test gets a fresh transaction that rolls back on teardown — no data leaks between tests, no truncation needed.
+
+```python
+# tests/conftest.py
+TEST_DATABASE_URL = os.environ["DATABASE_URL"]
+
+@pytest.fixture(scope="session")
+def engine() -> Generator[Engine, None, None]:
+    test_engine = create_engine(TEST_DATABASE_URL)
+    Base.metadata.create_all(bind=test_engine)
+    yield test_engine
+    Base.metadata.drop_all(bind=test_engine)
+    test_engine.dispose()
+
+@pytest.fixture
+def db_session(engine: Engine) -> Generator[Session, None, None]:
+    connection = engine.connect()
+    transaction = connection.begin()
+    session = sessionmaker(bind=connection)()
+
+    for factory_class in BaseFactory.__subclasses__():
+        factory_class._meta.sqlalchemy_session = session  # wire factories to test session
+
+    yield session
+
+    session.close()
+    transaction.rollback()   # discards everything created in the test
+    connection.close()
+
+@pytest.fixture
+def client(db_session: Session) -> Generator[TestClient, None, None]:
+    def _override_get_db() -> Generator[Session, None, None]:
+        yield db_session
+
+    app.dependency_overrides[get_db] = _override_get_db  # inject test session into routes
+    with TestClient(app) as test_client:
+        yield test_client
+    app.dependency_overrides.clear()
+```
+
+Key points:
+- `engine` is `scope="session"` — schema is created once per test run, not per test
+- `db_session` is function-scoped — each test gets its own transaction, rolled back after
+- Factories are wired to the same session so factory-created data is visible within the test
+- `client` overrides the `get_db` dependency so integration tests hit the same rolled-back session
 
 ---
 
