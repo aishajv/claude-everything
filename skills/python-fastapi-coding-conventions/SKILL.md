@@ -198,7 +198,6 @@ service.approve_application(application_id)   # semantic domain action
 # Never: service.create(...), service.update(...)
 ```
 
-See `references/naming-conventions.md` for the full pattern reference.
 
 ---
 
@@ -256,7 +255,6 @@ def get_user(user_id: UUID) -> User:
 - Minimize `try/except` — only catch at boundaries where transformation is needed (e.g., external API call → `HTTPException`)
 - Never catch exceptions defensively around code that can't fail
 
-See `references/error-handling.md` for the full exception hierarchy and patterns.
 
 ---
 
@@ -281,6 +279,31 @@ def create_category(self, tenant_id: UUID, name: str, ...) -> None:
 ```
 
 Never call `flush()` in repos — it sends SQL without committing, creating hidden side effects that differ from production behaviour.
+
+---
+
+## Logging
+
+Log at system boundaries only — incoming requests, outgoing external calls, background job start/end. Not within internal application code.
+
+- `ERROR` — exceptions and failures requiring attention
+- `INFO` — business events (state changes, important actions)
+- `DEBUG` — diagnostic info for dev/staging only
+- Never log sensitive data (passwords, tokens, PII)
+
+---
+
+## Configuration
+
+Use Pydantic Settings for all environment-based config. Required fields have no default — the app fails to start if they're missing. Never use fallback defaults for required config.
+
+---
+
+## Formatting & Imports
+
+- **Formatter:** `ruff format` | **Linter:** `ruff check` | configured at project root
+- Never use `from __future__ import annotations` — not needed in Python 3.12
+- Never use `# noqa` — fix the root cause or configure ruff per-file exceptions
 
 ---
 
