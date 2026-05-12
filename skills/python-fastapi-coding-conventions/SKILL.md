@@ -1,6 +1,6 @@
 ---
 name: python-fastapi-coding-conventions
-description: This skill should be used when creating a service class, adding an API route, defining Pydantic schemas, writing error handling, reviewing code style, or deciding what belongs in which layer. Covers style, naming, error handling, logging, configuration, database, API conventions, and per-layer rules.
+description: This skill should be used when creating a service class, adding an API route, defining Pydantic schemas, writing error handling, reviewing code style, checking project directory structure, or deciding what belongs in which layer. Covers style, naming, error handling, logging, configuration, database, directory structure, API conventions, and per-layer rules.
 ---
 
 # Coding Conventions
@@ -337,4 +337,5 @@ The only comment worth writing explains a non-obvious constraint, a workaround f
 - `references/logging.md` — log levels, what to log, boundaries
 - `references/configuration.md` — Pydantic Settings, required vs optional fields, dependency management
 - `references/database.md` — DB naming, base model, session management, migrations, repository rules
+- `references/directory-structure.md` — horizontal-slice project layout, bounded contexts, per-layer folder organisation, worked example tree
 - `references/layer-rules.md` — URL conventions, schema naming, and per-layer DO/DON'T lists for all layers: API, services, domain, persistence, and external clients
