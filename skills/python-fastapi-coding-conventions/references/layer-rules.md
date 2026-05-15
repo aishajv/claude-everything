@@ -2,6 +2,11 @@
 
 ## API Layer
 
+- **Purpose:** HTTP interface
+- **Contains:** Routes (define endpoints + call services directly), Pydantic schemas, middleware (auth, validation, logging)
+- **Must NOT contain:** Business rules, direct ORM operations, domain decisions, raw dicts as return types — always use Pydantic response models
+- **Dependencies:** API → Services, API → Persistence (infra only)
+
 ### URL & Schema Conventions
 - **URL structure** — use plural nouns for entity paths. If the project has bounded contexts (e.g., `setup`, `identity`, `billing`), prefix routes with the context: `/{context}/{entities}` (e.g., `/api/setup/categories`, `/api/identity/users`). If no bounded contexts exist, use flat entity paths: `/api/{entities}`. Set the top-level prefix when registering the router; entity prefix on the router itself.
 - **Use plural nouns** for route prefixes (`/categories` not `/category`) — file naming remains singular (`category.py`), URLs are plural
@@ -34,6 +39,7 @@
       return UserService.from_session(db).get_user(user_id)
   ```
 - **DON'T omit `status_code=`** — never rely on FastAPI's implicit 200 default
+- **DON'T put `/api` in the router prefix** — set the top-level `/api` prefix once when including the router in `main.py` (`app.include_router(router, prefix="/api")`). Individual routers use only their context-specific prefix (e.g. `prefix="/episodes"`, never `prefix="/api/episodes"`).
 - **DON'T return response bodies from POST** — no response schema for creation endpoints unless server-generated fields are needed
 - **DON'T use `Response`/`Request` suffixes on schemas** — never `RegisterResponse`, `CreateCategoryRequest`. Use domain nouns: `UserProfile`, `CategoryDetail`
 - **DON'T add defensive isinstance/type checks** for things middleware already guarantees
@@ -42,6 +48,11 @@
 ---
 
 ## Services Layer
+
+- **Purpose:** Execute use cases by coordinating domain + persistence
+- **Contains:** Use-case logic, transaction boundaries, calls to repositories, domain rule invocation
+- **Must NOT contain:** HTTP/request logic, framework types, raw SQL/ORM models, business truth (stays in domain), dataclasses or data structures (those go in `domain/entities/`)
+- **Dependencies:** Services → Domain, Services → Persistence
 
 ### DOs
 - **Organise by bounded context** — `services/identity/`, `services/setup/`, one file per entity within the context
@@ -102,6 +113,11 @@
 
 ## Domain Layer
 
+- **Purpose:** Pure business meaning and rules
+- **Contains:** Core business objects, business invariants, domain exceptions, domain types (enums, constants)
+- **Must NOT contain:** HTTP errors, DB errors, service logic, repository interfaces, validation frameworks, framework imports
+- **Dependencies:** Domain → NONE (depends on nothing)
+
 ### DOs
 - **Keep domain purely Python** — no imports from `api`, `services`, or `persistence`
 - **Subclass `DomainError` for all domain exceptions** — set `status_code` as a class attribute
@@ -128,6 +144,11 @@
 
 ## Persistence Layer
 
+- **Purpose:** Store and retrieve data. No business meaning.
+- **Contains:** ORM entities/tables, queries, repository implementations
+- **Must NOT contain:** Business rules, pricing/eligibility logic, HTTP concerns, service orchestration
+- **Dependencies:** Persistence → Domain
+
 ### DOs
 - **Keep repositories thin** — only data access logic, no business decisions
 - **Return `None` for not-found queries** — use `scalar_one_or_none()`. The service decides what "not found" means
@@ -152,6 +173,11 @@
 ---
 
 ## External Clients Layer
+
+- **Purpose:** Wrappers around third-party APIs (e.g. Stripe, OpenAI, SendGrid, Twilio)
+- **Contains:** Client classes + separate schema files, organised by provider
+- **File structure:** `{provider}/client.py` for the client class, `{provider}/schemas.py` for Pydantic request/response models. Never mix schemas into the client file.
+- **Dependencies:** Clients → Services *for exception classes only* — clients import typed exception types (e.g. `PaymentProcessingError` from `services/exceptions/`) to wrap raw external API errors as typed business errors. They never call service methods or import other service code.
 
 ### DOs
 - **One folder per provider** — `clients/resend/client.py` + `clients/resend/schemas.py`
@@ -179,3 +205,9 @@
 - **DON'T instantiate HTTP clients internally** — always inject, never `self._client = httpx.Client()` in `__init__`
 - **DON'T access `response.json()` directly** — always parse through a Pydantic model first
 - **DON'T swallow external exceptions** — always re-raise as a typed service exception with context
+
+---
+
+## Testing
+
+See the **`python-fastapi-test-conventions`** skill for the full test pyramid, factory pattern, and per-layer test conventions.
