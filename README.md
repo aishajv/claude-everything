@@ -4,7 +4,7 @@ Reusable Claude Code skills for Python/FastAPI backend development, packaged as 
 
 ## Installation
 
-### As a Claude Code plugin (recommended)
+### As a Claude Code plugin
 
 ```bash
 # Add the marketplace
@@ -16,7 +16,7 @@ Reusable Claude Code skills for Python/FastAPI backend development, packaged as 
 /plugin install git-push-workflow@claude-everything
 ```
 
-### Via skills.sh (legacy)
+### Via skills.sh
 
 ```bash
 # All skills
@@ -48,7 +48,7 @@ claude-everything/
 │   ├── fastapi-coding-conventions/
 │   ├── fastapi-test-conventions/
 │   └── git-push-workflow/
-└── skills/                    ← skills.sh format (legacy)
+└── skills/                    ← skills.sh format
     ├── python-fastapi-coding-conventions/
     ├── python-fastapi-test-conventions/
     └── git-push-workflow/
