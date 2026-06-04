@@ -1,0 +1,10 @@
+{
+  "name": "fastapi-coding-conventions",
+  "description": "Coding conventions for Python/FastAPI projects with SQLAlchemy, Pydantic v2, and layered architecture",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}
