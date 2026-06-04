@@ -1,0 +1,10 @@
+{
+  "name": "fastapi-test-conventions",
+  "description": "Testing conventions for Python/FastAPI projects — test pyramid, factories, per-layer rules",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}
