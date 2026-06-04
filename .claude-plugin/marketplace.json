@@ -1,0 +1,40 @@
+{
+  "name": "claude-everything",
+  "description": "Skills for Python/FastAPI development and git workflows",
+  "owner": {
+    "name": "Aisha Javed",
+    "url": "https://github.com/aishajv"
+  },
+  "plugins": [
+    {
+      "name": "python-fastapi-coding-conventions",
+      "description": "Coding conventions for Python/FastAPI projects with SQLAlchemy, Pydantic v2, and layered architecture",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "skills/python-fastapi-coding-conventions",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "python-fastapi-test-conventions",
+      "description": "Testing conventions for Python/FastAPI projects — test pyramid, factories, per-layer rules",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "skills/python-fastapi-test-conventions",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "git-push-workflow",
+      "description": "Git push workflow — squash, rebase, push, create MR",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "skills/git-push-workflow",
+        "ref": "main"
+      }
+    }
+  ]
+}
