@@ -1,0 +1,11 @@
+{
+  "name": "backend-production-guardrails",
+  "version": "1.0.0",
+  "description": "Guardrails for lost work, duplicate effects, concurrent updates, uncertain external results, and visible failures",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}

@@ -9,3 +9,4 @@
 - **Use Pydantic v2** for data validation and settings management
 - **Schema fields are required by default** — never use `| None`, `Optional`, or default values unless the data source is confirmed to return `null` or omit the field
 - **Typed schemas over raw dicts** — never pass `dict[str, Any]` between functions when a Pydantic model exists
+- **Parse once at the boundary** — validate request, event, and provider payloads immediately with `model_validate()`, then pass the typed model forward. Do not repeatedly cast fields or use chained `dict.get()` calls downstream.

@@ -336,6 +336,7 @@ The only comment worth writing explains a non-obvious constraint, a workaround f
 - `references/error-handling.md` — exception hierarchy, domain error patterns, try/except rules
 - `references/logging.md` — log levels, what to log, boundaries
 - `references/configuration.md` — Pydantic Settings, required vs optional fields, dependency management
+- `references/runtime-and-io.md` — FastAPI lifespan resources, async I/O, cancellation, uploads, and CORS
 - `references/database.md` — DB naming, base model, session management, migrations, repository rules
 - `references/directory-structure.md` — horizontal-slice project layout, bounded contexts, per-layer folder organisation, worked example tree
 - `references/migrations.md` — Alembic migration rules: autogenerate workflow, never-hand-edit, `alembic.ini` + `env.py` configuration, `DATABASE_URL` handling

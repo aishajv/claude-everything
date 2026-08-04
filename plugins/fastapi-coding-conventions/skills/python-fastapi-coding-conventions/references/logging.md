@@ -10,3 +10,4 @@
 - **Always catch exceptions as `except Exception as e:`** — never bare `except Exception:` without binding the variable. Always log the exception: `logger.warning("...: %s", e, exc_info=True)`
 - **Use `exc_info=True`** for stack traces
 - **Log at boundaries** — log when crossing a system boundary: incoming requests, outgoing external service calls, background job start/end. Not within internal application code.
+- **Inject correlation context** — implement the identifiers required by `backend-production-guardrails` in middleware or dependencies and include that context in Python boundary logs automatically.

@@ -35,6 +35,16 @@
         "path": "plugins/git-push-workflow",
         "ref": "main"
       }
+    },
+    {
+      "name": "backend-production-guardrails",
+      "description": "Guardrails for lost work, duplicate effects, concurrent updates, uncertain external results, and visible failures",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/backend-production-guardrails",
+        "ref": "main"
+      }
     }
   ]
 }
