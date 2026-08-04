@@ -35,6 +35,16 @@
         "path": "plugins/git-push-workflow",
         "ref": "main"
       }
+    },
+    {
+      "name": "modular-monolith-architecture",
+      "description": "Bounded contexts, ownership, public service-layer interfaces, and dependency control for modular monoliths",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/modular-monolith-architecture",
+        "ref": "main"
+      }
     }
   ]
 }

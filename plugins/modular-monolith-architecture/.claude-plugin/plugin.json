@@ -1,0 +1,11 @@
+{
+  "name": "modular-monolith-architecture",
+  "version": "1.0.0",
+  "description": "Bounded contexts, ownership, public service-layer interfaces, and dependency control for modular monoliths",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}
