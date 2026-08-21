@@ -7,6 +7,16 @@
   },
   "plugins": [
     {
+      "name": "design-multi-tenant-saas",
+      "description": "Tenant resolution, PostgreSQL RLS, tenant-aware constraints, and privileged access for multi-tenant SaaS systems",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/design-multi-tenant-saas",
+        "ref": "main"
+      }
+    },
+    {
       "name": "fastapi-coding-conventions",
       "description": "Coding conventions for Python/FastAPI projects with SQLAlchemy, Pydantic v2, and layered architecture",
       "source": {
