@@ -25,14 +25,27 @@ See **`references/migrations.md`** for full Alembic setup (`alembic.ini` + `env.
 - **One migration per logical change**
 
 ### Session & Transaction Management
-- **The session dependency owns the transaction** — commit and rollback happen at the request boundary, not in services or repos:
+- **The session dependency owns the transaction** — commit, rollback, and cleanup happen at the request boundary, not in services or repos:
   ```python
-  async def get_session() -> AsyncGenerator[AsyncSession, None]:
-      async with SessionLocal() as session:
-          yield session
-          await session.commit()  # only reached if no exception was raised
+  def get_db(request: Request) -> Generator[Session, None, None]:
+      yield from request.app.state.db.get_session()
+
+  DatabaseSession = Annotated[Session, Depends(get_db, scope="function")]
   ```
-- **Repos and services never call `commit()`, `flush()`, or `rollback()`** — repos only mutate ORM objects, services only orchestrate. The `async with` context manager handles rollback automatically on exception.
+- **Repos and services never call `commit()`, `flush()`, or `rollback()`** — the session context commits after a successful request and rolls back on exception.
+
+### Dependency Wiring (Composition Root)
+
+Wire each request's object graph in `api/dependencies.py`:
+
+```python
+def get_user_service(session: DatabaseSession) -> UserService:
+    return UserService(UserRepository(session))
+
+UserServiceDependency = Annotated[UserService, Depends(get_user_service)]
+```
+
+The route receives the finished service: `Session → Repository → Service → Endpoint`. Services accept repositories through their constructors; repositories accept sessions. Neither layer creates or searches for its own dependencies. Keep this manual FastAPI composition root until a real DI container is justified.
 
 ### Repository Rules
 - **Keep repositories thin** — only data access logic, no business logic

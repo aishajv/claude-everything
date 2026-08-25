@@ -87,30 +87,36 @@ class CategoryRepository:
 ```python
 # services/setup/category.py
 class CategoryService:
-    def __init__(self, category_repo: CategoryRepository, session: Session) -> None:
+    def __init__(self, category_repo: CategoryRepository) -> None:
         self._category_repo = category_repo
-        self._session = session
-
-    @classmethod
-    def from_session(cls, session: Session) -> "CategoryService":
-        return cls(CategoryRepository(session), session)
 
     def create_category(self, tenant_id: UUID, name: str, positive_keywords: list[str], negative_keywords: list[str]) -> None:
         if self._category_repo.exists_by_name_and_tenant(name, tenant_id):
             raise CategoryNameDuplicateError(f"Category '{name}' already exists")
         self._category_repo.create(tenant_id, name, positive_keywords, negative_keywords)
-        self._session.commit()
 ```
 
-**4. Route — HTTP in, HTTP out, no logic:**
+**4. Composition root — wire the request-scoped graph:**
+```python
+# api/dependencies.py
+def get_category_service(db: DatabaseSession) -> CategoryService:
+    return CategoryService(CategoryRepository(db))
+
+CategoryServiceDependency = Annotated[
+    CategoryService,
+    Depends(get_category_service),
+]
+```
+
+**5. Route — HTTP in, HTTP out, no logic:**
 ```python
 # api/routes/setup/category.py
 router = APIRouter(prefix="/categories", tags=["setup"])
 
 @router.post("", status_code=201)
-def create_category(body: CreateCategory, db: Session = Depends(get_db)) -> Response:
+def create_category(body: CreateCategory, service: CategoryServiceDependency) -> Response:
     ctx = identity_context_var.get()
-    CategoryService.from_session(db).create_category(
+    service.create_category(
         tenant_id=ctx.tenant_id,
         name=body.name,
         positive_keywords=body.positive_keywords,
@@ -151,13 +157,18 @@ def list_items():
     db = SessionLocal()   # hidden dependency, untestable
     ...
 
-# Good — injected, overridable in tests
+# Good — compose dependencies outside the route
 def get_db(request: Request) -> Generator[Session, None, None]:
     yield from request.app.state.db.get_session()
 
+def get_item_service(db: DatabaseSession) -> ItemService:
+    return ItemService(ItemRepository(db))
+
+ItemServiceDependency = Annotated[ItemService, Depends(get_item_service)]
+
 @router.get("/items")
-def list_items(db: Session = Depends(get_db)) -> ItemList:
-    ...
+def list_items(service: ItemServiceDependency) -> ItemList:
+    return service.list_items()
 ```
 
 - **No object instantiation at module level** — instantiate inside functions/methods, not as module-level variables. Module-level code: only `class`, `def`, constants, type aliases.
@@ -263,22 +274,24 @@ def get_user(user_id: UUID) -> User:
 The session dependency owns the transaction — neither services nor repos call `commit()` or `rollback()` directly:
 
 ```python
-# core/database.py
+# api/dependencies.py
 def get_db(request: Request) -> Generator[Session, None, None]:
     yield from request.app.state.db.get_session()
 ```
 
-The session is injected into routes via `Depends(get_db)` and passed down to repos. `commit()` is called in the service after all mutations succeed. Rollback is automatic — if an exception is raised before `commit()`, the session context manager discards all pending changes.
+`api/dependencies.py` is the request composition root: it receives the session, constructs repositories, constructs services, and lets FastAPI inject the finished service into the route.
 
 ```python
-def create_category(self, tenant_id: UUID, name: str, ...) -> None:
-    if self._repo.exists_by_name_and_tenant(name, tenant_id):
-        raise CategoryNameDuplicateError(...)   # nothing committed
-    self._repo.create(tenant_id, name, ...)
-    self._session.commit()                       # committed only on success
+def get_category_service(db: DatabaseSession) -> CategoryService:
+    return CategoryService(CategoryRepository(db))
+
+CategoryServiceDependency = Annotated[
+    CategoryService,
+    Depends(get_category_service),
+]
 ```
 
-Never call `flush()` in repos — it sends SQL without committing, creating hidden side effects that differ from production behaviour.
+The dependency chain is `Session → Repository → Service → Endpoint`. Services and repositories never create or search for their own dependencies, and neither calls `commit()`, `flush()`, or `rollback()`.
 
 ---
 
