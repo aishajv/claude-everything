@@ -27,16 +27,16 @@
   ```python
   # Bad — route catching and re-mapping domain errors
   @router.get("/{user_id}")
-  def get_user(user_id: UUID, db: Session = Depends(get_db)) -> UserProfile:
+  def get_user(user_id: UUID, service: UserServiceDependency) -> UserProfile:
       try:
-          return UserService.from_session(db).get_user(user_id)
+          return service.get_user(user_id)
       except UserNotFoundError:
           raise HTTPException(status_code=404)
 
   # Good — exception bubbles up, global handler maps it
   @router.get("/{user_id}")
-  def get_user(user_id: UUID, db: Session = Depends(get_db)) -> UserProfile:
-      return UserService.from_session(db).get_user(user_id)
+  def get_user(user_id: UUID, service: UserServiceDependency) -> UserProfile:
+      return service.get_user(user_id)
   ```
 - **DON'T omit `status_code=`** — never rely on FastAPI's implicit 200 default
 - **DON'T put `/api` in the router prefix** — set the top-level `/api` prefix once when including the router in `main.py` (`app.include_router(router, prefix="/api")`). Individual routers use only their context-specific prefix (e.g. `prefix="/episodes"`, never `prefix="/api/episodes"`).
@@ -50,15 +50,15 @@
 ## Services Layer
 
 - **Purpose:** Execute use cases by coordinating domain + persistence
-- **Contains:** Use-case logic, transaction boundaries, calls to repositories, domain rule invocation
+- **Contains:** Use-case logic, calls to repositories, domain rule invocation
 - **Must NOT contain:** HTTP/request logic, framework types, raw SQL/ORM models, business truth (stays in domain), dataclasses or data structures (those go in `domain/entities/`)
 - **Dependencies:** Services → Domain, Services → Persistence
 
 ### DOs
 - **Organise by bounded context** — `services/identity/`, `services/setup/`, one file per entity within the context
 - **Use classes** — each file contains one service class named `{Entity}Service`. Methods on the class are the use cases
-- **Inject repositories via constructor** — constructor takes repos and session as parameters
-- **Provide a `from_session` classmethod** — routes call `UserService.from_session(db)`, tests call `UserService(mock_repo, mock_session)` directly
+- **Inject repositories via constructor** — constructors take repositories, not sessions
+- **Wire dependencies in `api/dependencies.py`** — provider functions form the request composition root: session → repository → service → endpoint
 - **Raise domain exceptions** — services raise `DomainError` subclasses, never `HTTPException`
 - **Only create service files when implementing actual use cases** — no placeholder files
 
@@ -77,7 +77,7 @@
   ```
 - **DON'T create one-file-per-action** — never `register_user.py`, `get_current_user.py`. Group related operations into the entity's service class
 - **DON'T define dataclasses or data structures in service files** — those belong in `domain/entities/`
-- **DON'T instantiate repositories inside `__init__`** — accept repos as constructor parameters instead. `from_session` handles the wiring in production; tests pass mocks directly.
+- **DON'T instantiate repositories inside services** — accept repos as constructor parameters. The composition root handles production wiring; tests pass mocks directly.
   ```python
   # Bad — repo created internally, impossible to mock without @patch
   class UserService:
@@ -86,12 +86,11 @@
 
   # Good — repo injected, tests pass Mock(spec=UserRepository) directly
   class UserService:
-      def __init__(self, user_repo: UserRepository, session: Session) -> None:
+      def __init__(self, user_repo: UserRepository) -> None:
           self._repo = user_repo
 
-      @classmethod
-      def from_session(cls, session: Session) -> "UserService":
-          return cls(UserRepository(session), session)
+  def get_user_service(db: DatabaseSession) -> UserService:
+      return UserService(UserRepository(db))
   ```
 - **DON'T import `HTTPException`** — services never know about HTTP. Raise domain exceptions instead.
   ```python
