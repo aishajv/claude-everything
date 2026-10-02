@@ -1,0 +1,11 @@
+{
+  "name": "implementation-spec",
+  "version": "1.0.0",
+  "description": "Implementation-ready technical specs for approved features: current contracts, API, data, service, and job changes, failure behaviour, rollout, verification, and unknowns",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}
