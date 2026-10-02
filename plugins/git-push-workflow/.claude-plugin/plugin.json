@@ -1,5 +1,6 @@
 {
   "name": "git-push-workflow",
+  "version": "1.0.0",
   "description": "Git push workflow for GitLab — squash, rebase, push, create MR",
   "author": {
     "name": "Aisha Javed",
