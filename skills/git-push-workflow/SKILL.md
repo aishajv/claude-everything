@@ -1,7 +1,7 @@
 ---
 name: git-push-workflow
 description: This skill should be used when the user says "push", "push to remote", "create PR", "create MR", "pull request", "merge request", "open PR", or when committing and pushing code to GitHub or GitLab. Covers git workflow rules, branch naming conventions, commit message format, and the push + PR/MR creation procedure.
-allowed-tools: Bash(git *), Bash(gh *), Bash(glab *)
+allowed-tools: Bash(git *), Bash(gh pr create *), Bash(glab mr update *)
 model: haiku
 ---
 
