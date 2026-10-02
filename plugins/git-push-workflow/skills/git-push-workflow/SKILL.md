@@ -49,12 +49,12 @@ model: haiku
    - If no uncommitted changes, skip to step 3
 
 3. **Squash all branch commits into one:**
-   - Count commits ahead of `origin/main`
-   - If more than one commit: `git reset --soft origin/main` then `git commit` with the final message
+   - `git fetch origin main`
+   - Count commits ahead of `origin/main`: `git rev-list --count origin/main..HEAD`
+   - If more than one commit: find where the branch started with `git merge-base HEAD origin/main`, then run `git reset --soft <that commit>` and `git commit` with the final message
    - If exactly one commit: skip squash
 
 4. **Rebase on latest main:**
-   - `git fetch origin main`
    - `git rebase origin/main`
    - Resolve any conflicts. Only ping the user if you're unsure how to resolve a specific conflict; otherwise resolve and continue.
 
