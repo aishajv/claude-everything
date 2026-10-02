@@ -13,6 +13,7 @@ Reusable Claude Code skills for Python/FastAPI backend development, packaged as 
 # Install individual plugins
 /plugin install design-multi-tenant-saas@claude-everything
 /plugin install modular-monolith-architecture@claude-everything
+/plugin install implementation-spec@claude-everything
 /plugin install fastapi-coding-conventions@claude-everything
 /plugin install fastapi-test-conventions@claude-everything
 /plugin install git-push-workflow@claude-everything
@@ -28,6 +29,7 @@ npx skills add aishajv/claude-everything
 npx skills add aishajv/claude-everything --skill design-multi-tenant-saas
 npx skills add aishajv/claude-everything --skill python-fastapi-test-conventions
 npx skills add aishajv/claude-everything --skill modular-monolith-architecture
+npx skills add aishajv/claude-everything --skill implementation-spec
 ```
 
 ## Plugins
@@ -36,6 +38,7 @@ npx skills add aishajv/claude-everything --skill modular-monolith-architecture
 |--------|-------------|
 | `design-multi-tenant-saas` | Tenant resolution, PostgreSQL RLS, tenant-aware constraints, and privileged access |
 | `modular-monolith-architecture` | Bounded contexts, business ownership, public service-layer interfaces, and module dependency control |
+| `implementation-spec` | Technical specs for approved features: current contracts, API, data, service, and job changes, failure behaviour, rollout, and verification |
 | `fastapi-coding-conventions` | Architecture, naming, error handling, data contracts, API design for Python/FastAPI + SQLAlchemy + Pydantic v2 |
 | `fastapi-test-conventions` | Test pyramid, per-layer rules, factory patterns, conftest setup for pytest |
 | `git-push-workflow` | Squash, rebase, push, and create MR for GitLab |
@@ -55,10 +58,12 @@ claude-everything/
 │   ├── fastapi-coding-conventions/
 │   ├── fastapi-test-conventions/
 │   ├── git-push-workflow/
+│   ├── implementation-spec/
 │   └── modular-monolith-architecture/
 └── skills/                    ← skills.sh format
     ├── design-multi-tenant-saas/
     ├── modular-monolith-architecture/
+    ├── implementation-spec/
     ├── python-fastapi-coding-conventions/
     ├── python-fastapi-test-conventions/
     └── git-push-workflow/

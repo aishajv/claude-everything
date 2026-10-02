@@ -55,6 +55,16 @@
         "path": "plugins/modular-monolith-architecture",
         "ref": "main"
       }
+    },
+    {
+      "name": "implementation-spec",
+      "description": "Implementation-ready technical specs for approved features: current contracts, API, data, service, and job changes, failure behaviour, rollout, verification, and unknowns",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/implementation-spec",
+        "ref": "main"
+      }
     }
   ]
 }
