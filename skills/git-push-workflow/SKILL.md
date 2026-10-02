@@ -59,8 +59,8 @@ model: haiku
    - Resolve any conflicts. Only ping the user if you're unsure how to resolve a specific conflict; otherwise resolve and continue.
 
 5. **Push and create PR/MR:**
-   - **GitHub:** `git push origin HEAD -f`, then `gh pr create --base main --title "<commit subject>" --body "<commit body or summary>"`
-   - **GitLab:** `git push origin HEAD -o merge_request.create -o merge_request.target=main -f` (creates the MR via push options in one command)
+   - **GitHub:** `git push origin HEAD --force-with-lease`, then `gh pr create --base main --title "<commit subject>" --body "<commit body or summary>"`
+   - **GitLab:** `git push origin HEAD -o merge_request.create -o merge_request.target=main --force-with-lease` (creates the MR via push options in one command)
 
 6. **Set PR/MR title** to match the squashed commit message:
    - **GitHub:** title is set during `gh pr create` (step 5) — nothing more to do
