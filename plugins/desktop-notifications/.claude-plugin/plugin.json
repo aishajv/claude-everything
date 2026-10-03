@@ -1,0 +1,11 @@
+{
+  "name": "desktop-notifications",
+  "version": "1.0.0",
+  "description": "Hook that shows a desktop notification on macOS or Linux when Claude Code is idle or needs permission",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}

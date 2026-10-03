@@ -1,0 +1,11 @@
+{
+  "name": "protect-files",
+  "version": "1.0.0",
+  "description": "Hook that blocks reading or editing secret files (.env, keys) and editing lockfiles or project-listed paths; fails closed",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}

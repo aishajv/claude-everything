@@ -1,0 +1,11 @@
+{
+  "name": "python-auto-format",
+  "version": "1.0.0",
+  "description": "Hook that runs ruff format on each Python file Claude edits",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}

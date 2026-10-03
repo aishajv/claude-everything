@@ -1,0 +1,11 @@
+{
+  "name": "compaction-context",
+  "version": "1.0.0",
+  "description": "Hook that re-injects the git branch, status, recent commits, and an optional project note after context compaction",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}

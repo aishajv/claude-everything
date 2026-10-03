@@ -7,6 +7,46 @@
   },
   "plugins": [
     {
+      "name": "compaction-context",
+      "description": "Hook that re-injects the git branch, status, recent commits, and an optional project note after context compaction",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/compaction-context",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "desktop-notifications",
+      "description": "Hook that shows a desktop notification on macOS or Linux when Claude Code is idle or needs permission",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/desktop-notifications",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "protect-files",
+      "description": "Hook that blocks reading or editing secret files (.env, keys) and editing lockfiles or project-listed paths; fails closed",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/protect-files",
+        "ref": "main"
+      }
+    },
+    {
+      "name": "python-auto-format",
+      "description": "Hook that runs ruff format on each Python file Claude edits",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/python-auto-format",
+        "ref": "main"
+      }
+    },
+    {
       "name": "fastapi-coding-conventions",
       "description": "Coding conventions for Python/FastAPI projects with SQLAlchemy, Pydantic v2, and layered architecture",
       "source": {
