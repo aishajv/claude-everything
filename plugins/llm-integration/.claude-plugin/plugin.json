@@ -1,0 +1,11 @@
+{
+  "name": "llm-integration",
+  "version": "1.0.0",
+  "description": "Reliable LLM calls in Python backends: one injected client, validated structured output, bounded retries, shared rate limits, versioned prompts, cost limits, and caching",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}

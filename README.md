@@ -17,6 +17,7 @@ Reusable Claude Code skills for Python/FastAPI backend development, packaged as 
 /plugin install fastapi-coding-conventions@claude-everything
 /plugin install fastapi-test-conventions@claude-everything
 /plugin install git-push-workflow@claude-everything
+/plugin install llm-integration@claude-everything
 ```
 
 ### Via skills.sh
@@ -27,6 +28,7 @@ npx skills add aishajv/claude-everything
 
 # Specific skill
 npx skills add aishajv/claude-everything --skill design-multi-tenant-saas
+npx skills add aishajv/claude-everything --skill llm-integration
 npx skills add aishajv/claude-everything --skill python-fastapi-test-conventions
 npx skills add aishajv/claude-everything --skill modular-monolith-architecture
 npx skills add aishajv/claude-everything --skill implementation-spec
@@ -42,6 +44,7 @@ npx skills add aishajv/claude-everything --skill implementation-spec
 | `fastapi-coding-conventions` | Architecture, naming, error handling, data contracts, API design for Python/FastAPI + SQLAlchemy + Pydantic v2 |
 | `fastapi-test-conventions` | Test pyramid, per-layer rules, factory patterns, conftest setup for pytest |
 | `git-push-workflow` | Squash, rebase, push, and create MR for GitLab |
+| `llm-integration` | Reliable LLM calls: one injected client, validated structured output, bounded retries, rate limits, versioned prompts, cost limits, caching |
 
 ## Stack
 
@@ -59,9 +62,11 @@ claude-everything/
 │   ├── fastapi-test-conventions/
 │   ├── git-push-workflow/
 │   ├── implementation-spec/
+│   ├── llm-integration/
 │   └── modular-monolith-architecture/
 └── skills/                    ← skills.sh format
     ├── design-multi-tenant-saas/
+    ├── llm-integration/
     ├── modular-monolith-architecture/
     ├── implementation-spec/
     ├── python-fastapi-coding-conventions/
