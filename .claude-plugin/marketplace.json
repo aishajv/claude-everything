@@ -47,6 +47,16 @@
       }
     },
     {
+      "name": "llm-integration",
+      "description": "Reliable LLM calls in Python backends: one injected client, validated structured output, bounded retries, shared rate limits, versioned prompts, cost limits, and caching",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/llm-integration",
+        "ref": "main"
+      }
+    },
+    {
       "name": "modular-monolith-architecture",
       "description": "Bounded contexts, ownership, public service-layer interfaces, and dependency control for modular monoliths",
       "source": {
