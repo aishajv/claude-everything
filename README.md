@@ -33,7 +33,7 @@ npx skills add aishajv/claude-everything --skill modular-monolith-architecture
 | Plugin | Description |
 |--------|-------------|
 | `modular-monolith-architecture` | Bounded contexts, business ownership, public service-layer interfaces, and module dependency control |
-| `fastapi-coding-conventions` | Architecture, naming, error handling, data contracts, API design for Python/FastAPI + SQLAlchemy + Pydantic v2 |
+| `fastapi-coding-conventions` | Architecture, naming, error handling, data contracts, API design for Python/FastAPI + SQLAlchemy + Pydantic v2. Includes the `/fastapi-coding-conventions:exception-bubble-audit` workflow (about 5 agents per run) |
 | `fastapi-test-conventions` | Test pyramid, per-layer rules, factory patterns, conftest setup for pytest |
 | `git-push-workflow` | Squash, rebase, push, and create MR for GitLab |
 
