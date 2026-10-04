@@ -1,108 +1,120 @@
-# Claude Everything
+<p align="center">
+  <img src="assets/hero.svg" alt="Claude Everything: an animated Claude Code terminal adds this marketplace, installs a plugin, and turns a feature into a pull request" width="100%">
+</p>
 
-Reusable Claude Code skills for Python/FastAPI backend development, packaged as a native Claude Code plugin marketplace.
+<p align="center">
+  <a href="#start-in-2-minutes">Start in 2 minutes</a> ·
+  <a href="#plugins">Plugins</a> ·
+  <a href="#the-pr-factory">The PR factory</a> ·
+  <a href="https://github.com/aishajv/ai-trainings">Learn the concepts</a>
+</p>
 
-## Installation
+# Welcome 👋
 
-### As a Claude Code plugin
+**Claude Everything is a free plugin marketplace for Claude Code**, built for Python and FastAPI teams.
 
-```bash
-# Add the marketplace
-/plugin marketplace add aishajv/claude-everything
+Each plugin teaches Claude something your team would otherwise explain again and again: how to structure code, how to write tests, how to push a branch, how to design multi-tenant data. Install the ones you want, skip the rest, and Claude starts working your way from the first prompt.
 
-# Install individual plugins
-/plugin install design-multi-tenant-saas@claude-everything
-/plugin install modular-monolith-architecture@claude-everything
-/plugin install implementation-spec@claude-everything
-/plugin install fastapi-coding-conventions@claude-everything
-/plugin install fastapi-test-conventions@claude-everything
-/plugin install git-push-workflow@claude-everything
-/plugin install llm-integration@claude-everything
-/plugin install feature-to-pr-factory@claude-everything
-```
+New to skills, agents, or hooks? Start with [ai-trainings](https://github.com/aishajv/ai-trainings), a friendly, hands-on tour of the same setup.
 
-### Via skills.sh
+## Start in 2 minutes
 
-```bash
-# All skills
-npx skills add aishajv/claude-everything
-
-# Specific skill
-npx skills add aishajv/claude-everything --skill design-multi-tenant-saas
-npx skills add aishajv/claude-everything --skill llm-integration
-npx skills add aishajv/claude-everything --skill python-fastapi-test-conventions
-npx skills add aishajv/claude-everything --skill modular-monolith-architecture
-npx skills add aishajv/claude-everything --skill implementation-spec
-```
-
-`feature-to-pr-factory` is plugin-only: its skills need its agents, and skills.sh installs skills only.
+1. **Add the marketplace** in Claude Code:
+   ```bash
+   /plugin marketplace add aishajv/claude-everything
+   ```
+2. **Install a plugin**, for example:
+   ```bash
+   /plugin install fastapi-coding-conventions@claude-everything
+   ```
+3. **Just work.** Ask Claude to build something; the plugin's skills load on their own when they're relevant.
 
 ## Plugins
 
-| Plugin | Description |
-|--------|-------------|
-| `design-multi-tenant-saas` | Tenant resolution, PostgreSQL RLS, tenant-aware constraints, and privileged access |
-| `modular-monolith-architecture` | Bounded contexts, business ownership, public service-layer interfaces, and module dependency control |
-| `implementation-spec` | Technical specs for approved features: current contracts, API, data, service, and job changes, failure behaviour, rollout, and verification |
-| `fastapi-coding-conventions` | Architecture, naming, error handling, data contracts, API design for Python/FastAPI + SQLAlchemy + Pydantic v2 |
+**Knowledge skills:** Claude follows these rules whenever the topic comes up.
+
+| Plugin | What Claude learns |
+|--------|--------------------|
+| `fastapi-coding-conventions` | Architecture, naming, error handling, data contracts, and API design for Python/FastAPI + SQLAlchemy + Pydantic v2 |
 | `fastapi-test-conventions` | Test pyramid, per-layer rules, factory patterns, conftest setup for pytest |
-| `git-push-workflow` | Squash, rebase, push, and create MR for GitLab |
+| `modular-monolith-architecture` | Bounded contexts, business ownership, public service-layer interfaces, module dependency control |
+| `design-multi-tenant-saas` | Tenant resolution, PostgreSQL Row-Level Security, tenant-aware constraints |
 | `llm-integration` | Reliable LLM calls: one injected client, validated structured output, bounded retries, rate limits, versioned prompts, cost limits, caching |
-| [`feature-to-pr-factory`](plugins/feature-to-pr-factory/README.md) | Turn one feature into tickets (`build-tickets-from-feature`), then build each ticket into a reviewed, tested PR (`build-prs-from-tickets`); includes the agents (plugin only). See its [README](plugins/feature-to-pr-factory/README.md) for how it works |
+| `implementation-spec` | Implementation-ready specs for approved features: contracts, changes, failure behaviour, rollout, verification |
+| `git-push-workflow` | Squash, rebase, push, and open a PR on GitHub or an MR on GitLab |
 
-## The PR factory flow
+**Workflow plugin:** skills, agents, and a hook working together.
 
-`feature-to-pr-factory` has two orchestrator skills that talk to you and hand the focused work to subagents. One feature goes in; reviewed, tested pull requests come out.
+| Plugin | What it does |
+|--------|--------------|
+| [`feature-to-pr-factory`](plugins/feature-to-pr-factory/README.md) | Turns one feature into tickets, then builds each ticket into a reviewed, tested PR, with agents doing the work |
 
-```mermaid
-flowchart LR
-    F([One feature]) --> A
-    subgraph A[build-tickets-from-feature]
-        direction TB
-        A1[Agree the scope with you] --> A2[ticket-drafter drafts tickets]
-        A2 --> A3[You review each ticket] --> A4[Issues created]
-    end
-    A --> B
-    subgraph B[build-prs-from-tickets]
-        direction TB
-        B1[ticket-implementer builds a ticket] --> B2[diff-reviewer checks it]
-        B2 --> B3[test-runner runs make test]
-        B3 --> B4[ticket-implementer opens the PR]
-        B2 -. fixes .-> B1
-        B3 -. fixes .-> B1
-    end
-    B --> P([One PR per ticket])
+Install any of them the same way:
+
+```bash
+/plugin install <plugin-name>@claude-everything
 ```
+
+## The PR factory
+
+`feature-to-pr-factory` has two orchestrator skills that talk to you and hand the focused work to agents. One feature goes in; reviewed, tested pull requests come out.
+
+<p align="center"><img src="assets/pr-factory-flow.svg" alt="Animated PR factory: a feature flows through ticket-drafter and issues, then ticket-implementer, diff-reviewer, and test-runner; a Stop hook makes make test pass before the implementer can finish, and the orchestrator sends review and test issues back to it; out comes one PR per ticket" width="100%"></p>
+
+- **Forced:** a Stop hook runs `make test` whenever `ticket-implementer` tries to finish. It cannot finish until the tests pass.
+- **Coordinated:** the orchestrator sends issues found by `diff-reviewer` and `test-runner` back to the same implementer, which fixes its own code.
+
+See the [plugin README](plugins/feature-to-pr-factory/README.md) for the full walkthrough.
+
+## Prefer skills.sh?
+
+The knowledge skills also install with [skills.sh](https://skills.sh), which works across AI coding tools:
+
+```bash
+npx skills add aishajv/claude-everything                       # all skills
+npx skills add aishajv/claude-everything --skill llm-integration  # one skill
+```
+
+`feature-to-pr-factory` is plugin-only: its skills need its agents, and skills.sh installs skills only.
 
 ## Stack
 
 Python 3.12+ · FastAPI · SQLAlchemy · Alembic · Pydantic v2 · pytest · factory_boy
 
-## Structure
+<details>
+<summary><b>Repository structure</b></summary>
 
 ```
 claude-everything/
 ├── .claude-plugin/
 │   └── marketplace.json       ← Claude Code marketplace catalog
+├── assets/                    ← README visuals
 ├── plugins/                   ← Native Claude Code plugins
 │   ├── design-multi-tenant-saas/
 │   ├── fastapi-coding-conventions/
 │   ├── fastapi-test-conventions/
+│   ├── feature-to-pr-factory/
 │   ├── git-push-workflow/
 │   ├── implementation-spec/
 │   ├── llm-integration/
-│   ├── modular-monolith-architecture/
-│   └── feature-to-pr-factory/
+│   └── modular-monolith-architecture/
 └── skills/                    ← skills.sh format
     ├── design-multi-tenant-saas/
+    ├── git-push-workflow/
+    ├── implementation-spec/
     ├── llm-integration/
     ├── modular-monolith-architecture/
-    ├── implementation-spec/
     ├── python-fastapi-coding-conventions/
-    ├── python-fastapi-test-conventions/
-    └── git-push-workflow/
+    └── python-fastapi-test-conventions/
 ```
 
-## Maintaining
+</details>
+
+<details>
+<summary><b>Maintaining</b></summary>
 
 Every `plugin.json` has a `version`. Bump it in any PR that changes the plugin; otherwise installed users keep the old version.
+
+</details>
+
+<p align="center"><sub>Questions or ideas? <a href="https://github.com/aishajv/claude-everything/issues">Open an issue</a>. Happy building! ✨</sub></p>

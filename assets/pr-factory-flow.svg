@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 380" role="img" aria-labelledby="ft fd">
+  <title id="ft">The PR factory flow</title>
+  <desc id="fd">One feature flows through build-tickets-from-feature (ticket-drafter drafts tickets, issues are created) and build-prs-from-tickets (ticket-implementer builds each ticket and its Stop hook makes make test pass before it can finish; diff-reviewer and test-runner check it, and the orchestrator sends their issues back to the implementer) and comes out as one pull request per ticket.</desc>
+  <defs>
+    <linearGradient id="fbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f1d1a"/>
+      <stop offset="1" stop-color="#141311"/>
+    </linearGradient>
+    <radialGradient id="dotglow">
+      <stop offset="0" stop-color="#ffb08f"/>
+      <stop offset=".45" stop-color="#d97757"/>
+      <stop offset="1" stop-color="#d97757" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .h { font: 700 26px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #f5f4ee; }
+      .p { font: 400 15px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #a8a397; }
+      .stage { font: 600 13px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #d97757; letter-spacing: .5px; }
+      .n { font: 600 14px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #f5f4ee; }
+      .s { font: 400 12px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #a8a397; }
+      .fx { font: 600 12px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #8f8a7e; paint-order: stroke; stroke: #1b1a17; stroke-width: 8px; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="380" rx="24" fill="url(#fbg)"/>
+
+  <text x="40" y="52" class="h">The PR factory</text>
+  <text x="40" y="78" class="p">One feature in. Reviewed, tested pull requests out.</text>
+
+  <!-- stage frames -->
+  <rect x="160" y="120" width="330" height="225" rx="14" fill="none" stroke="#3a3732" stroke-dasharray="5 5"/>
+  <text x="164" y="110" class="stage">build-tickets-from-feature</text>
+  <rect x="510" y="120" width="575" height="225" rx="14" fill="none" stroke="#3a3732" stroke-dasharray="5 5"/>
+  <text x="514" y="110" class="stage">build-prs-from-tickets</text>
+
+  <!-- track -->
+  <line x1="85" y1="205" x2="1135" y2="205" stroke="#2f2c28" stroke-width="2"/>
+
+  <!-- fixes loops -->
+  <path id="selfLoop" d="M 580 173 C 565 146, 665 146, 650 173" fill="none" stroke="#d97757" stroke-width="2"/>
+  <text x="615" y="138" text-anchor="middle" class="fx" style="fill:#d97757">Stop hook: make test</text>
+  <path id="fixA" d="M 815 237 C 790 287, 640 287, 615 237" fill="none" stroke="#5a554d" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <path id="fixB" d="M 995 237 C 960 322, 650 322, 615 237" fill="none" stroke="#5a554d" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <text x="805" y="333" text-anchor="middle" class="fx">sent back by the orchestrator</text>
+
+  <!-- the traveling work item -->
+  <circle r="11" fill="url(#dotglow)">
+    <animateMotion path="M 85 205 L 1135 205" keyPoints="0;1;1" keyTimes="0;0.9;1" calcMode="linear" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <!-- nodes: each lights up when the dot passes -->
+  <g>
+    <rect x="30" y="173" width="110" height="64" rx="12" fill="#2b2925" stroke="#d97757" stroke-width="1.5"/>
+    <text x="85" y="202" text-anchor="middle" class="n">💡 Feature</text>
+    <text x="85" y="222" text-anchor="middle" class="s">your idea</text>
+  </g>
+  <g>
+    <rect x="175" y="173" width="160" height="64" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.13;0.146;0.23;0.3;1" dur="10s" repeatCount="indefinite"/>
+    </rect>
+    <text x="255" y="202" text-anchor="middle" class="n">ticket-drafter</text>
+    <text x="255" y="222" text-anchor="middle" class="s">drafts the tickets</text>
+  </g>
+  <g>
+    <rect x="370" y="173" width="100" height="64" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.27;0.287;0.37;0.44;1" dur="10s" repeatCount="indefinite"/>
+    </rect>
+    <text x="420" y="202" text-anchor="middle" class="n">Issues</text>
+    <text x="420" y="222" text-anchor="middle" class="s">created</text>
+  </g>
+  <g>
+    <rect x="525" y="173" width="180" height="64" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.44;0.454;0.88;0.93;1" dur="10s" repeatCount="indefinite"/>
+    </rect>
+    <text x="615" y="202" text-anchor="middle" class="n">ticket-implementer</text>
+    <text x="615" y="222" text-anchor="middle" class="s">builds in a worktree</text>
+  </g>
+  <g>
+    <rect x="740" y="173" width="150" height="64" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.61;0.626;0.71;0.78;1" dur="10s" repeatCount="indefinite"/>
+    </rect>
+    <text x="815" y="202" text-anchor="middle" class="n">diff-reviewer</text>
+    <text x="815" y="222" text-anchor="middle" class="s">checks the diff</text>
+  </g>
+  <g>
+    <rect x="925" y="173" width="140" height="64" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.765;0.78;0.86;0.92;1" dur="10s" repeatCount="indefinite"/>
+    </rect>
+    <text x="995" y="202" text-anchor="middle" class="n">test-runner</text>
+    <text x="995" y="222" text-anchor="middle" class="s">runs make test</text>
+  </g>
+  <g>
+    <rect x="1095" y="173" width="80" height="64" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#8fc79a;#8fc79a;#3a3732" keyTimes="0;0.885;0.9;0.99;1" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="fill" values="#2b2925;#2b2925;#22302a;#22302a;#2b2925" keyTimes="0;0.885;0.9;0.99;1" dur="10s" repeatCount="indefinite"/>
+    </rect>
+    <text x="1135" y="202" text-anchor="middle" class="n">PR ✅</text>
+    <text x="1135" y="222" text-anchor="middle" class="s">per ticket</text>
+  </g>
+
+
+  <!-- Stop hook: a spark circles the implementer while it works -->
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.47;0.56;1" calcMode="linear"><mpath href="#selfLoop" xlink:href="#selfLoop"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.469;0.475;0.555;0.56;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <!-- fixes: small sparks loop back to the implementer -->
+  <circle r="5" fill="#d97757" opacity="0">
+    <animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.64;0.72;1" calcMode="linear"><mpath href="#fixA" xlink:href="#fixA"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.639;0.645;0.715;0.72;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#d97757" opacity="0">
+    <animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.79;0.87;1" calcMode="linear"><mpath href="#fixB" xlink:href="#fixB"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.789;0.795;0.865;0.87;1" dur="10s" repeatCount="indefinite"/>
+  </circle>
+</svg>
