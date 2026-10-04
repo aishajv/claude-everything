@@ -1,5 +1,6 @@
 {
   "name": "fastapi-test-conventions",
+  "version": "1.0.0",
   "description": "Testing conventions for Python/FastAPI projects — test pyramid, factories, per-layer rules",
   "author": {
     "name": "Aisha Javed",
