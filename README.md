@@ -18,6 +18,7 @@ Reusable Claude Code skills for Python/FastAPI backend development, packaged as 
 /plugin install fastapi-test-conventions@claude-everything
 /plugin install git-push-workflow@claude-everything
 /plugin install llm-integration@claude-everything
+/plugin install feature-to-pr-factory@claude-everything
 ```
 
 ### Via skills.sh
@@ -34,6 +35,8 @@ npx skills add aishajv/claude-everything --skill modular-monolith-architecture
 npx skills add aishajv/claude-everything --skill implementation-spec
 ```
 
+`feature-to-pr-factory` is plugin-only: its skills need its agents, and skills.sh installs skills only.
+
 ## Plugins
 
 | Plugin | Description |
@@ -45,6 +48,7 @@ npx skills add aishajv/claude-everything --skill implementation-spec
 | `fastapi-test-conventions` | Test pyramid, per-layer rules, factory patterns, conftest setup for pytest |
 | `git-push-workflow` | Squash, rebase, push, and create MR for GitLab |
 | `llm-integration` | Reliable LLM calls: one injected client, validated structured output, bounded retries, rate limits, versioned prompts, cost limits, caching |
+| [`feature-to-pr-factory`](plugins/feature-to-pr-factory/README.md) | Turn one feature into tickets (`build-tickets-from-feature`), then build each ticket into a reviewed, tested PR (`build-prs-from-tickets`); includes the agents (plugin only). See its [README](plugins/feature-to-pr-factory/README.md) for how it works |
 
 ## Stack
 
@@ -63,7 +67,8 @@ claude-everything/
 │   ├── git-push-workflow/
 │   ├── implementation-spec/
 │   ├── llm-integration/
-│   └── modular-monolith-architecture/
+│   ├── modular-monolith-architecture/
+│   └── feature-to-pr-factory/
 └── skills/                    ← skills.sh format
     ├── design-multi-tenant-saas/
     ├── llm-integration/

@@ -1,0 +1,14 @@
+{
+  "name": "feature-to-pr-factory",
+  "version": "1.0.0",
+  "description": "Turn one feature into dependency-ordered GitHub or GitLab issues, then build each ticket into its own reviewed, tested PR or MR with agents",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything",
+  "dependencies": [
+    "git-push-workflow"
+  ]
+}
