@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" role="img" aria-labelledby="t d">
+  <title id="t">Claude Everything: a Claude Code plugin marketplace</title>
+  <desc id="d">An animated Claude Code terminal adds the claude-everything marketplace, installs a plugin, and turns a feature into a pull request.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f1d1a"/>
+      <stop offset="1" stop-color="#141311"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d97757" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#d97757" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#d97757" stop-opacity="0"/>
+    </linearGradient>
+    <style>
+      .title { font: 700 54px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #f5f4ee; }
+      .sub { font: 400 22px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #b9b5a9; }
+      .chip { font: 600 15px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #f5f4ee; }
+      .mono { font: 400 15px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #e9e6dc; }
+      .dim { fill: #8f8a7e; }
+      .acc { fill: #d97757; }
+      .ok { fill: #8fc79a; }
+      .line { opacity: 0; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="460" rx="24" fill="url(#bg)"/>
+
+  <!-- master clock: restarts the terminal every 16s -->
+  <rect width="0" height="0"><animate id="loop" attributeName="width" from="0" to="0" dur="16s" begin="0s;loop.end"/></rect>
+
+  <!-- left: title -->
+  <text x="64" y="132" class="sub" style="fill:#d97757;font-weight:600;letter-spacing:3px;font-size:15px">PLUGIN MARKETPLACE</text>
+  <text x="64" y="196" class="title">Claude Everything</text>
+  <text x="64" y="240" class="sub">Ready-made skills, agents, and hooks</text>
+  <text x="64" y="270" class="sub">for Python and FastAPI teams.</text>
+
+  <g transform="translate(64 316)">
+    <rect width="96" height="36" rx="18" fill="#2b2925" stroke="#3a3732"/><text x="48" y="23" text-anchor="middle" class="chip">Skills</text>
+    <rect x="108" width="118" height="36" rx="18" fill="#2b2925" stroke="#3a3732"/><text x="167" y="23" text-anchor="middle" class="chip">Agents</text>
+    <rect x="238" width="90" height="36" rx="18" fill="#2b2925" stroke="#3a3732"/><text x="283" y="23" text-anchor="middle" class="chip">Hooks</text>
+    <rect x="340" width="136" height="36" rx="18" fill="#2b2925" stroke="#3a3732"/><text x="408" y="23" text-anchor="middle" class="chip">Workflows</text>
+  </g>
+  <text x="64" y="396" class="sub" style="font-size:16px">Install one plugin, or all of them.</text>
+
+  <!-- right: terminal -->
+  <g transform="translate(620 56)">
+    <rect width="520" height="348" rx="14" fill="#0f0e0c" stroke="#3a3732"/>
+    <rect width="520" height="40" rx="14" fill="#211f1c"/>
+    <rect y="26" width="520" height="14" fill="#211f1c"/>
+    <circle cx="24" cy="20" r="6" fill="#e5675c"/><circle cx="44" cy="20" r="6" fill="#e7b04e"/><circle cx="64" cy="20" r="6" fill="#5fc172"/>
+    <text x="260" y="25" text-anchor="middle" class="mono dim" style="font-size:13px">claude</text>
+
+    <g transform="translate(24 76)">
+      <text class="mono line"><tspan class="acc">✻</tspan> Welcome to Claude Code
+        <set attributeName="opacity" to="1" begin="loop.begin+0.4s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <text y="30" class="mono line"><tspan class="acc">&gt;</tspan> /plugin marketplace add aishajv/claude-everything
+        <set attributeName="opacity" to="1" begin="loop.begin+1.6s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <text y="56" class="mono line"><tspan class="ok">  ✓</tspan> marketplace added: 8 plugins
+        <set attributeName="opacity" to="1" begin="loop.begin+3s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <text y="82" class="mono line"><tspan class="acc">&gt;</tspan> /plugin install feature-to-pr-factory
+        <set attributeName="opacity" to="1" begin="loop.begin+4.4s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <text y="118" class="mono line"><tspan class="ok">  ✓</tspan> installed, plus git-push-workflow
+        <set attributeName="opacity" to="1" begin="loop.begin+5.8s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <text y="144" class="mono line"><tspan class="acc">&gt;</tspan> /build-tickets-from-feature
+        <set attributeName="opacity" to="1" begin="loop.begin+7.2s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <text y="170" class="mono line"><tspan class="dim">  ticket-drafter</tspan>  drafting 3 tickets…
+        <set attributeName="opacity" to="1" begin="loop.begin+8.6s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <text y="196" class="mono line"><tspan class="acc">&gt;</tspan> /build-prs-from-tickets
+        <set attributeName="opacity" to="1" begin="loop.begin+10s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <text y="222" class="mono line"><tspan class="ok">  ✓</tspan> PR #42 opened, ready for review
+        <set attributeName="opacity" to="1" begin="loop.begin+11.4s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
+      <rect x="2" y="238" width="10" height="20" class="acc">
+        <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </g>
+
+  <!-- moving glow line along the bottom -->
+  <rect x="0" y="440" width="300" height="3" fill="url(#glow)">
+    <animate attributeName="x" from="-300" to="1200" dur="5s" repeatCount="indefinite"/>
+  </rect>
+</svg>
