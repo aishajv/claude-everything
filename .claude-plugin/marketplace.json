@@ -75,6 +75,16 @@
         "path": "plugins/implementation-spec",
         "ref": "main"
       }
+    },
+    {
+      "name": "feature-to-pr-factory",
+      "description": "Turn one feature into dependency-ordered GitHub or GitLab issues, then build each ticket into its own reviewed, tested PR or MR with agents",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/aishajv/claude-everything.git",
+        "path": "plugins/feature-to-pr-factory",
+        "ref": "main"
+      }
     }
   ]
 }
