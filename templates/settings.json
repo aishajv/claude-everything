@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git fetch *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git switch *)",
+      "Bash(pytest *)",
+      "Bash(mypy *)",
+      "Bash(ruff check *)",
+      "Bash(ruff format *)",
+      "Bash(poetry run pytest *)",
+      "Bash(poetry run mypy *)",
+      "Bash(poetry run ruff *)",
+      "Bash(uv run pytest *)",
+      "Bash(uv run mypy *)",
+      "Bash(uv run ruff *)",
+      "WebFetch(domain:docs.python.org)",
+      "WebFetch(domain:fastapi.tiangolo.com)",
+      "WebFetch(domain:docs.pydantic.dev)",
+      "WebFetch(domain:docs.sqlalchemy.org)",
+      "WebFetch(domain:alembic.sqlalchemy.org)",
+      "WebFetch(domain:docs.astral.sh)",
+      "WebFetch(domain:python-poetry.org)",
+      "WebFetch(domain:docs.pytest.org)",
+      "WebFetch(domain:pypi.org)",
+      "WebFetch(domain:code.claude.com)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(poetry add *)",
+      "Bash(uv add *)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(!.env.example)",
+      "Read(!.env.sample)",
+      "Read(!.env.template)",
+      "Read(*.pem)",
+      "Read(*.key)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Bash(sudo *)"
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "claude-everything": {
+      "source": {
+        "source": "github",
+        "repo": "aishajv/claude-everything"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "design-multi-tenant-saas@claude-everything": true,
+    "fastapi-coding-conventions@claude-everything": true,
+    "fastapi-test-conventions@claude-everything": true,
+    "git-push-workflow@claude-everything": true,
+    "implementation-spec@claude-everything": true,
+    "llm-integration@claude-everything": true,
+    "modular-monolith-architecture@claude-everything": true
+  }
+}

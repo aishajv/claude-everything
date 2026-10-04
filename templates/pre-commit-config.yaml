@@ -1,0 +1,44 @@
+# Git hooks run by the pre-commit tool: ruff (format + lint) and mypy on commit;
+# tests (`make test`) and the branch-name check on push.
+# Setup: copy this file to .pre-commit-config.yaml, copy scripts/validate-branch-name.sh
+# to scripts/ in your project, then run:
+#   pre-commit install --hook-type pre-commit --hook-type pre-push
+# Using uv instead of Poetry? Replace `poetry run` with `uv run`.
+
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-format
+        name: ruff format
+        entry: poetry run ruff format
+        language: system
+        types: [python]
+
+      - id: ruff-check
+        name: ruff check
+        entry: poetry run ruff check --fix
+        language: system
+        types: [python]
+
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy src/
+        language: system
+        types: [python]
+        pass_filenames: false
+
+      - id: tests
+        name: tests (make test)
+        entry: make test
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: branch-name
+        name: branch name check
+        entry: ./scripts/validate-branch-name.sh
+        language: script
+        always_run: true
+        pass_filenames: false
+        stages: [pre-push]
