@@ -1,0 +1,11 @@
+{
+  "name": "design-multi-tenant-saas",
+  "version": "1.0.0",
+  "description": "Tenant resolution, PostgreSQL RLS, tenant-aware constraints, and privileged access for multi-tenant SaaS systems",
+  "author": {
+    "name": "Aisha Javed",
+    "email": "aisha.jv70@gmail.com"
+  },
+  "homepage": "https://github.com/aishajv/claude-everything",
+  "repository": "https://github.com/aishajv/claude-everything"
+}
