@@ -50,6 +50,30 @@ npx skills add aishajv/claude-everything --skill implementation-spec
 | `llm-integration` | Reliable LLM calls: one injected client, validated structured output, bounded retries, rate limits, versioned prompts, cost limits, caching |
 | [`feature-to-pr-factory`](plugins/feature-to-pr-factory/README.md) | Turn one feature into tickets (`build-tickets-from-feature`), then build each ticket into a reviewed, tested PR (`build-prs-from-tickets`); includes the agents (plugin only). See its [README](plugins/feature-to-pr-factory/README.md) for how it works |
 
+## The PR factory flow
+
+`feature-to-pr-factory` has two orchestrator skills that talk to you and hand the focused work to subagents. One feature goes in; reviewed, tested pull requests come out.
+
+```mermaid
+flowchart LR
+    F([One feature]) --> A
+    subgraph A[build-tickets-from-feature]
+        direction TB
+        A1[Agree the scope with you] --> A2[ticket-drafter drafts tickets]
+        A2 --> A3[You review each ticket] --> A4[Issues created]
+    end
+    A --> B
+    subgraph B[build-prs-from-tickets]
+        direction TB
+        B1[ticket-implementer builds a ticket] --> B2[diff-reviewer checks it]
+        B2 --> B3[test-runner runs make test]
+        B3 --> B4[ticket-implementer opens the PR]
+        B2 -. fixes .-> B1
+        B3 -. fixes .-> B1
+    end
+    B --> P([One PR per ticket])
+```
+
 ## Stack
 
 Python 3.12+ · FastAPI · SQLAlchemy · Alembic · Pydantic v2 · pytest · factory_boy

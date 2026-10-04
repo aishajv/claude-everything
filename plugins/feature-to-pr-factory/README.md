@@ -41,8 +41,8 @@ plugins/feature-to-pr-factory/
 │   ├── ticket-implementer.md       implements one ticket in its own worktree, pushes when told
 │   ├── diff-reviewer.md            reviews one ticket's diff (read-only)
 │   └── test-runner.md              runs the project's tests in that worktree
-├── hooks/hooks.json                runs the guard before Bash commands
-└── scripts/guard-agents.sh         blocks risky test-runner commands; stops ticket-implementer skipping git hooks
+├── hooks/hooks.json                runs the test hook when ticket-implementer finishes
+└── scripts/run-tests-before-done.sh  make test must pass before ticket-implementer can finish
 ```
 
 ## The two stages
@@ -70,6 +70,8 @@ ticket-implementer ──► diff-reviewer ──► test-runner ──► ticke
         └────── fixes ───────┴────────────────┘
 ```
 
+Whenever `ticket-implementer` tries to finish, a `SubagentStop` hook runs `make test` in its worktree. Failing tests send it back to fix them; after 3 failed attempts it reports BLOCKED.
+
 A ticket that depends on another opens its PR only after that PR is merged, so each PR shows only its own changes. Issues close automatically when their PRs merge.
 
 ## Install
@@ -85,6 +87,5 @@ A ticket that depends on another opens its PR only after that PR is merged, so e
 
 - `gh` (GitHub) or `glab` (GitLab), logged in; the tracker is detected from the `origin` remote
 - A `make test` target that runs the project's tests (for example `poetry run pytest`)
-- Git hooks that run the tests before a push, such as the pre-commit template in this repo; `ticket-implementer` cannot skip them with `--no-verify`
-- `jq`, used by the guard hook
+- `jq`, used by the test hook
 - Branch protection on `main` in GitHub or GitLab; the plugin does not guard `main` itself
