@@ -1,19 +1,19 @@
 # Database Conventions
 
 ### Naming
-- **Tables:** `snake_case`, singular (`tenant`, `supplier`, `position`)
+- **Tables:** `snake_case`, singular (`customer`, `product`, `order_line`)
 - **Columns:** `snake_case`
 - **Primary keys:** `id` (UUID or integer)
-- **Foreign keys:** `{table}_id` (e.g., `tender_id`, `supplier_id`)
+- **Foreign keys:** `{table}_id` (e.g., `customer_id`, `product_id`)
 - **Timestamps:** `created_at`, `updated_at`
 - **Booleans:** `is_active`, `is_published`
 
 ### Base Model
 - **All ORM models inherit from a shared `Base`**
 - **`Base` provides common columns:** `id` (UUID PK, auto-generated), `created_at`, `updated_at`
-- **Timestamps use `DateTime(timezone=True)`** with `datetime.now(UTC)` — always timezone-aware
+- **Timestamps use `DateTime(timezone=True)`** with `datetime.now(UTC)` - always timezone-aware
 - **Cross-cutting FK columns** (e.g., a tenant or org scoping key) belong per-model or in a mixin, not in `Base`
-- **Audit columns like `created_by`** — add per-model only where it makes business sense
+- **Audit columns like `created_by`** - add per-model only where it makes business sense
 
 ### Migrations
 
@@ -25,14 +25,14 @@ See **`references/migrations.md`** for full Alembic setup (`alembic.ini` + `env.
 - **One migration per logical change**
 
 ### Session & Transaction Management
-- **The session dependency owns the transaction** — commit, rollback, and cleanup happen at the request boundary, not in services or repos:
+- **The session dependency owns the transaction** - commit, rollback, and cleanup happen at the request boundary, not in services or repos:
   ```python
   def get_db(request: Request) -> Generator[Session, None, None]:
       yield from request.app.state.db.get_session()
 
   DatabaseSession = Annotated[Session, Depends(get_db, scope="function")]
   ```
-- **Repos and services never call `commit()`, `flush()`, or `rollback()`** — the session context commits after a successful request and rolls back on exception.
+- **Repos and services never call `commit()`, `flush()`, or `rollback()`** - the session context commits after a successful request and rolls back on exception.
 
 ### Dependency Wiring (Composition Root)
 
@@ -48,6 +48,6 @@ UserServiceDependency = Annotated[UserService, Depends(get_user_service)]
 The route receives the finished service: `Session → Repository → Service → Endpoint`. Services accept repositories through their constructors; repositories accept sessions. Neither layer creates or searches for its own dependencies. Keep this manual FastAPI composition root until a real DI container is justified.
 
 ### Repository Rules
-- **Keep repositories thin** — only data access logic, no business logic
-- **Service layer never passes ORM objects to repositories** — mutation methods (`create`, `update`, `delete`) accept only primitives (IDs, strings, lists). The service calls `repo.get_by_id()` for business validation (e.g., raising a domain not-found error), then calls `repo.update(entity_id, ...)` or `repo.delete(entity_id)` with the ID. The repo does its own internal lookup to get the row to mutate — that's data access, not business logic.
-- **Repositories return `None` from mutations** — `create()` and `update()` return `None`, not the ORM object. Only return an ORM when the caller genuinely needs server-generated fields.
+- **Keep repositories thin** - only data access logic, no business logic
+- **Service layer never passes ORM objects to repositories** - mutation methods (`create`, `update`, `delete`) accept only primitives (IDs, strings, lists). The service calls `repo.get_by_id()` for business validation (e.g., raising a domain not-found error), then calls `repo.update(entity_id, ...)` or `repo.delete(entity_id)` with the ID. The repo does its own internal lookup to get the row to mutate - that's data access, not business logic.
+- **Repositories return `None` from mutations** - `create()` and `update()` return `None`, not the ORM object. Only return an ORM when the caller genuinely needs server-generated fields.

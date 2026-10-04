@@ -63,3 +63,7 @@ claude-everything/
     ├── python-fastapi-test-conventions/
     └── git-push-workflow/
 ```
+
+## Maintaining
+
+Every `plugin.json` has a `version`. Bump it in any PR that changes the plugin; otherwise installed users keep the old version.
