@@ -1,7 +1,7 @@
 {
   "name": "git-push-workflow",
-  "version": "1.0.0",
-  "description": "Git push workflow for GitLab — squash, rebase, push, create MR",
+  "version": "1.1.0",
+  "description": "Git push workflow for GitHub and GitLab: squash, rebase, push, and open a PR or MR, including stacked PRs",
   "author": {
     "name": "Aisha Javed",
     "email": "aisha.jv70@gmail.com"

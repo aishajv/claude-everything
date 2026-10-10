@@ -28,7 +28,7 @@
     },
     {
       "name": "fastapi-test-conventions",
-      "description": "Testing conventions for Python/FastAPI projects — test pyramid, factories, per-layer rules",
+      "description": "Testing conventions for Python/FastAPI projects: test pyramid, factories, per-layer rules",
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/aishajv/claude-everything.git",
@@ -38,7 +38,7 @@
     },
     {
       "name": "git-push-workflow",
-      "description": "Git push workflow for GitLab — squash, rebase, push, create MR",
+      "description": "Git push workflow for GitHub and GitLab: squash, rebase, push, and open a PR or MR, including stacked PRs",
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/aishajv/claude-everything.git",
@@ -78,7 +78,7 @@
     },
     {
       "name": "feature-to-pr-factory",
-      "description": "Turn one feature into dependency-ordered GitHub or GitLab issues, then build each ticket into its own reviewed, tested PR or MR with agents",
+      "description": "Turn one feature into dependency-ordered GitHub or GitLab issues, then build each ticket into its own reviewed, tested, stacked PR or MR with agents",
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/aishajv/claude-everything.git",
