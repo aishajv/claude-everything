@@ -38,7 +38,7 @@
     },
     {
       "name": "git-push-workflow",
-      "description": "Git push workflow for GitLab — squash, rebase, push, create MR",
+      "description": "Git push workflow for GitHub and GitLab: squash, rebase, push, and open a PR or MR, including stacked PRs",
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/aishajv/claude-everything.git",
