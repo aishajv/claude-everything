@@ -1,7 +1,7 @@
 {
   "name": "feature-to-pr-factory",
-  "version": "1.1.0",
-  "description": "Turn one feature into dependency-ordered GitHub or GitLab issues, then build each ticket into its own reviewed, tested PR or MR with agents",
+  "version": "2.0.0",
+  "description": "Turn one feature into dependency-ordered GitHub or GitLab issues, then build each ticket into its own reviewed, tested, stacked PR or MR with agents",
   "author": {
     "name": "Aisha Javed",
     "email": "aisha.jv70@gmail.com"
