@@ -59,10 +59,11 @@ Install any of them the same way:
 
 `feature-to-pr-factory` has two orchestrator skills that talk to you and hand the focused work to agents. One feature goes in; reviewed, tested pull requests come out.
 
-<p align="center"><img src="assets/pr-factory-flow.svg" alt="Animated PR factory: a feature flows through ticket-drafter and issues, then ticket-implementer, diff-reviewer, and test-runner; a Stop hook makes make test pass before the implementer can finish, and the orchestrator sends review and test issues back to it; out comes one PR per ticket" width="100%"></p>
+<p align="center"><img src="assets/pr-factory-flow.svg" alt="Animated PR factory: a feature flows through ticket-drafter and issues, then ticket-implementer, whose test loop Claude Code runs; code-reviewer and test-reviewer check each ticket in parallel and the orchestrator sends their critical issues back to the implementer; out comes one stacked PR per ticket, which you merge" width="100%"></p>
 
-- **Forced:** a Stop hook runs `make test` whenever `ticket-implementer` tries to finish. It cannot finish until the tests pass.
-- **Coordinated:** the orchestrator sends issues found by `diff-reviewer` and `test-runner` back to the same implementer, which fixes its own code.
+- **Tests, forced by Claude Code:** a Stop hook runs `make test` whenever `ticket-implementer` tries to finish. It cannot finish until the tests pass; after 3 failed attempts it reports BLOCKED and you decide.
+- **Review, run by the orchestrator:** `code-reviewer` and `test-reviewer` check each ticket in parallel. The orchestrator sends their critical issues back to the same implementer, at most twice, then asks you.
+- **You merge:** each ticket becomes its own PR, stacked on the one it depends on, and the orchestrator keeps the stack rebased as you merge.
 
 See the [plugin README](plugins/feature-to-pr-factory/README.md) for the full walkthrough.
 
