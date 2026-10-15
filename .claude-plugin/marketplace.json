@@ -28,7 +28,7 @@
     },
     {
       "name": "fastapi-test-conventions",
-      "description": "Testing conventions for Python/FastAPI projects — test pyramid, factories, per-layer rules",
+      "description": "Testing conventions for Python/FastAPI projects: test pyramid, factories, per-layer rules",
       "source": {
         "source": "git-subdir",
         "url": "https://github.com/aishajv/claude-everything.git",
