@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 480" role="img" aria-labelledby="pt pd">
   <title id="pt">plan-feature-into-tickets, phase by phase</title>
-  <desc id="pd">Phases 1 to 3 run in plan mode and only read and talk. Phase 1: the main agent starts three read-only explorer agents, asks questions, proposes a plan, turns it into a spec, and saves both in the plan file. After your yes, Phase 2 starts ticket-drafter with the plan file's path; the drafter reads the plan and the code and replies once with every ticket. Phase 3 shows the tickets one at a time: small changes are edited by the main agent, big changes send the plan back to the drafter. After you approve the plan, plan mode ends and Phase 4 renames the plan file and creates the issues.</desc>
+  <desc id="pd">Phases 1 to 3 run in plan mode and only read and talk. Phase 1: the main agent starts three read-only explorer agents, asks questions, proposes a plan, and saves it in the plan file as a spec. After your yes, Phase 2 starts ticket-drafter with the plan file's path; the drafter reads the plan and the code and replies once with every ticket. Phase 3 shows the tickets one at a time: small changes are edited by the main agent, big changes send the plan back to the drafter. After you approve the plan, plan mode ends and Phase 4 renames the plan file and creates the issues.</desc>
   <defs>
     <linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1f1d1a"/>
@@ -62,7 +62,7 @@
     <text x="70" y="184" class="n">1 · Brainstorm</text>
     <text x="70" y="208" class="s">explore · ask · propose</text>
     <text x="70" y="228" class="s">agree, then write the spec</text>
-    <text x="70" y="248" class="s">saves ## Proposal, ## Spec</text>
+    <text x="70" y="248" class="s">saves the plan as a spec</text>
   </g>
   <g>
     <rect x="330" y="150" width="220" height="120" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
