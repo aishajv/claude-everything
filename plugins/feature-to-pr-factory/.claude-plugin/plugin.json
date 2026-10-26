@@ -9,6 +9,7 @@
   "homepage": "https://github.com/aishajv/claude-everything",
   "repository": "https://github.com/aishajv/claude-everything",
   "dependencies": [
-    "git-push-workflow"
+    "git-push-workflow",
+    "implementation-spec"
   ]
 }
