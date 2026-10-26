@@ -18,7 +18,7 @@ The caller gives you:
 
 ## Steps
 
-1. Use the Skill tool to load every installed coding convention skill for this project's stack, for example `python-fastapi-coding-conventions` in a Python/FastAPI project. Also read the project's CLAUDE.md.
+1. Use the Skill tool to load `python-fastapi-coding-conventions`, and read the project's CLAUDE.md.
 2. Read each changed file that is not a test in full, inside the worktree path, not only the changed lines.
 3. Check the changes against those rules.
 4. Check each acceptance criterion: find the code that implements it.
