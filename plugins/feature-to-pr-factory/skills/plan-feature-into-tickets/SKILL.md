@@ -1,8 +1,6 @@
 ---
 name: plan-feature-into-tickets
 description: Plan a feature with the user in plan mode - brainstorm the approach, agree on it, then turn it into small, dependency-ordered GitHub or GitLab issues. Use when the user says "plan this feature", "break this into tickets", "create tickets for", or "plan the implementation of".
-model: claude-opus-5-5
-effort: high
 ---
 
 # Plan a Feature into Tickets
@@ -26,7 +24,8 @@ Say: "**Phase 1: Brainstorm.** Let's work out what to build."
 4. **Propose.** Say what you plan to do:
    - the approach, in a few bullets
    - what changes: data, API, background jobs, behaviour users see
-   - where there is a real choice: the options, their trade-offs, and your recommendation
+   - the design: which components change, how they work together, and how data flows between them
+   - the architectural trade-offs: for each real choice, the options, their pros and cons, and your recommendation
    - what stays out of this feature
    - open questions
 5. **Iterate.** Discuss and revise the proposal until the user agrees with it.
@@ -41,8 +40,9 @@ Example proposal:
 - Customers can cancel an order until it ships.
 - Data: add `cancelled_at` and `cancellation_reason` to `orders`.
 - API: `POST /orders/{order_id}/cancellation`; a shipped order returns 409 `order_already_shipped`.
-- Refund: reuse `PaymentService.refund()`.
-- Choice: keep cancelled orders (recommended: support keeps the history) or delete them.
+- Design: `OrderService.cancel()` marks the order and queues a refund job that reuses `PaymentService.refund()`.
+- Trade-off: refund in a background job (recommended: a slow payment provider does not block the request) or inline (simpler, but the request waits).
+- Trade-off: keep cancelled orders (recommended: support keeps the history) or delete them.
 - Not included: partial cancellation.
 - Open question: may admins cancel a shipped order?
 ```
