@@ -13,7 +13,7 @@ Two **orchestrator skills** run in your Claude session, talk to you, and start *
 ```
 feature-to-pr-factory
 │
-├── plan-feature-into-tickets    (orchestrator skill, Opus 5.5, plan mode)
+├── plan-feature-into-tickets    (orchestrator skill, plan mode)
 │     brainstorms the plan with you, reviews tickets with you, creates the issues
 │     └── calls: ticket-drafter
 │
