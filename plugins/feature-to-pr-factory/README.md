@@ -54,7 +54,7 @@ plugins/feature-to-pr-factory/
 
 <p align="center"><img src="assets/plan-feature-into-tickets.svg" alt="Animated plan-feature-into-tickets flow: in plan mode, Phase 1 brainstorms with explorer agents and saves the proposal; after your yes, Phase 2 sends the plan file path to ticket-drafter, which replies once with every ticket; Phase 3 reviews the tickets one at a time and sends big changes back to the drafter; after you approve, plan mode ends and Phase 4 renames the plan file and creates the issues" width="100%"></p>
 
-1. Brainstorm with you: the skill reads the code, proposes an approach with options and a recommendation, and revises it until you agree. The plan gets a name, such as `order-cancellation`.
+1. Brainstorm with you: the skill reads the code, proposes an approach with options and a recommendation, and revises it until you agree. The plan gets a name, such as `order-cancellation`, and is saved as a spec: exact API, data, failure, and test details, with every open question answered.
 2. `ticket-drafter` reads the code and drafts dependency-ordered tickets.
 3. You review the tickets one at a time.
 4. The skill creates the issues, each labelled `scope:<name>`.
