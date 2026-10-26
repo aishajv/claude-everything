@@ -53,7 +53,7 @@ Ask: "Shall I draft the tickets for this plan?" Continue only on a clear yes.
 
 Say: "**Phase 2: Drafting.** ticket-drafter is exploring the codebase; I'll show the tickets when it is done."
 
-Start `feature-to-pr-factory:ticket-drafter` with the plan file's path and: "Return the complete ticket breakdown." If you cannot start agents, follow this plugin's `agents/ticket-drafter.md` yourself.
+Start `feature-to-pr-factory:ticket-drafter` with the plan file's path and: "Return the complete ticket breakdown." If you cannot start it, tell the user.
 
 ## Phase 3: Review One Ticket at a Time
 
