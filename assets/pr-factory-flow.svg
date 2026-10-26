@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 400" role="img" aria-labelledby="ft fd">
   <title id="ft">The PR factory flow</title>
-  <desc id="fd">One feature flows through build-tickets-from-feature (ticket-drafter drafts tickets, issues are created) and build-prs-from-tickets. There, ticket-implementer builds each ticket while Claude Code runs make test every time it tries to finish (after 3 failures it reports BLOCKED and you decide). When it reports DONE, code-reviewer and test-reviewer check it in parallel; the orchestrator sends their critical issues back to the implementer, at most twice. A clean ticket becomes a stacked pull request, which you merge.</desc>
+  <desc id="fd">One feature flows through plan-feature-into-tickets (ticket-drafter drafts tickets, issues are created) and build-prs-from-tickets. There, ticket-implementer builds each ticket while Claude Code runs make test every time it tries to finish (after 3 failures it reports BLOCKED and you decide). When it reports DONE, code-reviewer and test-reviewer check it in parallel; the orchestrator sends their critical issues back to the implementer, at most twice. A clean ticket becomes a stacked pull request, which you merge.</desc>
   <defs>
     <linearGradient id="fbg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1f1d1a"/>
@@ -29,7 +29,7 @@
 
   <!-- stage frames -->
   <rect x="150" y="122" width="320" height="250" rx="14" fill="none" stroke="#3a3732" stroke-dasharray="5 5"/>
-  <text x="154" y="112" class="stage">build-tickets-from-feature</text>
+  <text x="154" y="112" class="stage">plan-feature-into-tickets</text>
   <rect x="490" y="122" width="560" height="250" rx="14" fill="none" stroke="#3a3732" stroke-dasharray="5 5"/>
   <text x="494" y="112" class="stage">build-prs-from-tickets</text>
 
