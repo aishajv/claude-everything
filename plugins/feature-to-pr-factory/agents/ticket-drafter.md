@@ -22,7 +22,8 @@ The caller gives you the path to a plan file. Read it first. It holds:
 1. **Explore.** Find the modules the plan touches. Read the existing entities, models, services, routes, schemas, and tests. Note what exists and what must be created. Use the Skill tool to load every installed convention skill for this project's stack, for example `python-fastapi-coding-conventions` in a Python/FastAPI project, and follow them and the project's CLAUDE.md.
 2. **Break down.** Split the work into tickets in dependency order. One ticket is one layer or one thin vertical slice. Skip layers the plan does not touch:
    data model → persistence and migrations → services → API → background jobs → tests
-3. **Return** the full breakdown in the format below.
+3. **Make them atomic.** Each ticket is the smallest change that still works and can be tested on its own, so an agent can build and debug it fast and anyone can revert it alone. Go over every ticket and ask: can this be split further? If yes, split it. Keep a ticket bigger only when its parts cannot work apart, and say why in its description.
+4. **Return** the full breakdown in the format below.
 
 ## Ticket Format
 
