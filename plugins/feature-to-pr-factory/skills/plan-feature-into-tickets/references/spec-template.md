@@ -1,6 +1,6 @@
 # Plan File Template
 
-Keep every heading, in this order. Write `None` under a heading the feature does not touch, and `Pending U<n>` where an unknown blocks the content.
+These headings are the minimum every plan covers. Add any other section that helps, such as design notes or the trade-offs you agreed on. Write `None` under a heading the feature does not touch, and `Pending U<n>` where an unknown blocks the content.
 
 ```markdown
 # Plan: <scope-name>
