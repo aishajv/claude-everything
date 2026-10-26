@@ -13,7 +13,7 @@ Two **orchestrator skills** run in your Claude session, talk to you, and start *
 ```
 feature-to-pr-factory
 │
-├── build-tickets-from-feature   (orchestrator skill, Opus 5.5, plan mode)
+├── plan-feature-into-tickets    (orchestrator skill, Opus 5.5, plan mode)
 │     brainstorms the plan with you, reviews tickets with you, creates the issues
 │     └── calls: ticket-drafter
 │
@@ -37,7 +37,7 @@ The thinking happens upstream: the drafter writes exact tickets, so a fast, chea
 plugins/feature-to-pr-factory/
 ├── .claude-plugin/plugin.json      name, version, depends on git-push-workflow
 ├── skills/
-│   ├── build-tickets-from-feature/ feature → tickets → issues
+│   ├── plan-feature-into-tickets/  feature → tickets → issues
 │   └── build-prs-from-tickets/     issues → reviewed, tested, stacked PRs
 ├── agents/
 │   ├── ticket-drafter.md           drafts the tickets (read-only)
@@ -50,7 +50,7 @@ plugins/feature-to-pr-factory/
 
 ## The two stages
 
-**1. `build-tickets-from-feature`**
+**1. `plan-feature-into-tickets`**
 
 1. Brainstorm with you: the skill reads the code, proposes an approach with options and a recommendation, and revises it until you agree. The plan gets a name, such as `order-cancellation`.
 2. `ticket-drafter` reads the code and drafts dependency-ordered tickets.
