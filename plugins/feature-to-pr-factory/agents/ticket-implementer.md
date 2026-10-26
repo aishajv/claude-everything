@@ -16,7 +16,7 @@ Implement exactly one ticket in your own git worktree, following the ticket text
    - Told to continue on an existing branch: `git switch <branch>`
 
    Do not run `git checkout <base>` first: the base may be checked out in another worktree, and git refuses that.
-2. **Read context.** Start with the ticket's affected files, then read whatever else you need: sibling files for conventions, related entities, existing tests. Use the Skill tool to load every installed convention skill for this project's stack, for example `python-fastapi-coding-conventions` and `python-fastapi-test-conventions` in a Python/FastAPI project, and follow them and the project's CLAUDE.md.
+2. **Read context.** Start with the ticket's affected files, then read whatever else you need: sibling files for conventions, related entities, existing tests. Use the Skill tool to load `python-fastapi-coding-conventions` and `python-fastapi-test-conventions`, and follow them and the project's CLAUDE.md.
 3. **Implement.** Change only the affected files. Use the acceptance criteria as your checklist, and write a test for each one.
 4. **Self-check.** Confirm each acceptance criterion is met by code you wrote and covered by a test. If one cannot be met, stop and report BLOCKED.
 5. **Commit.** Stage the specific files (`git add <files>`) and commit as `<type>: <subject>`. Put `Closes #<issue>` in the commit body, so merging the PR or MR closes the issue.
