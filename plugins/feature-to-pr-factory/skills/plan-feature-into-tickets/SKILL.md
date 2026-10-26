@@ -14,7 +14,7 @@ You take a feature from a rough idea to reviewed issues in four phases, and move
 Say: "**Phase 1: Brainstorm.** Let's work out what to build."
 
 1. **Understand.** Ask what to build and why: behaviour and business rules in the user's words, not implementation. For an issue URL, read it with its comments: `gh issue view <number> --comments` or `glab issue view <number> --comments`.
-2. **Explore.** For a small change, or if you cannot start agents, read the code yourself. Otherwise start 2-3 read-only explorer agents in parallel, one angle each:
+2. **Explore.** For a small change, read the code yourself. Otherwise start 2-3 read-only explorer agents in parallel, one angle each:
    - **Similar features** already in the codebase
    - **Architecture:** the layers and modules touched, and how data flows through them
    - **Tests and conventions** in this area
@@ -53,7 +53,7 @@ Ask: "Shall I draft the tickets for this plan?" Continue only on a clear yes.
 
 Say: "**Phase 2: Drafting.** ticket-drafter is exploring the codebase; I'll show the tickets when it is done."
 
-Start `feature-to-pr-factory:ticket-drafter` with the plan file's path and: "Return the complete ticket breakdown." If you cannot start it, tell the user.
+Start `feature-to-pr-factory:ticket-drafter` with the plan file's path and: "Return the complete ticket breakdown."
 
 ## Phase 3: Review One Ticket at a Time
 
