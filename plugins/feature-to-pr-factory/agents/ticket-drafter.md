@@ -15,7 +15,7 @@ The caller gives you the path to a plan file. Read it first. It holds:
 - the agreed plan with its decisions, and its scope name
 - the key files found while planning; start exploring from them
 - the text of the source issue, if there is one
-- the path to an implementation spec, if one exists. When it exists, it is the source of truth: do not re-decide anything it settles.
+- the spec, under `## Spec`. It is the source of truth: do not re-decide anything it settles.
 
 ## Steps
 
