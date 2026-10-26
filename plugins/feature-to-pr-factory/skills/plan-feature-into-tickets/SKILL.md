@@ -30,7 +30,7 @@ Say: "**Phase 1: Brainstorm.** Let's work out what to build."
    - open questions
 5. **Iterate** until the user agrees.
 6. **Name it** with a short kebab-case scope name, such as `order-cancellation`. It becomes the `scope:<name>` label that `build-prs-from-tickets` uses.
-7. **Write the plan file:** the agreed proposal and decisions, the scope name, the key files, and, if any, the source issue's text and the implementation spec's path. The drafter works from this file.
+7. **Write the plan file** in the project's `.claude/plans/` directory, under a `## Proposal` heading: the agreed proposal and decisions, the scope name, the key files, and, if any, the source issue's text and the implementation spec's path. The drafter works from this file.
 
 Example proposal:
 
@@ -65,7 +65,7 @@ Show one ticket at a time and wait for feedback:
 - **Small change** (wording, a rename, a scope tweak): edit it, confirm, lock it.
 - **Wrong approach or missing context:** return to Phase 1, or update the plan file and rerun Phase 2.
 
-When all are locked, add them to the plan file below the proposal and ask the user to approve the plan. Approval ends plan mode and starts Phase 4.
+When all are locked, add them to the same plan file under a `## Tickets` heading, after `## Proposal`, and ask the user to approve the plan. Approval ends plan mode and starts Phase 4.
 
 ## Phase 4: Create the Issues
 
