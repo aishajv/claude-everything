@@ -2,30 +2,32 @@
 name: plan-feature-into-tickets
 description: Plan a feature with the user in plan mode - brainstorm the approach, agree on it, then turn it into small, dependency-ordered GitHub or GitLab issues. Use when the user says "plan this feature", "break this into tickets", "create tickets for", or "plan the implementation of".
 model: claude-opus-5-5
+hooks:
+  PreToolUse:
+    - matcher: "*"
+      hooks:
+        - type: command
+          command: bash
+          args: ["${CLAUDE_PLUGIN_ROOT}/scripts/require-plan-mode.sh"]
+  PostToolUse:
+    - matcher: ExitPlanMode
+      hooks:
+        - type: command
+          command: bash
+          args: ["${CLAUDE_PLUGIN_ROOT}/scripts/require-plan-mode.sh", "approved"]
 ---
 
 # Plan a Feature into Tickets
 
-You are the orchestrator: you run in the user's session, talk to the user, and start the ticket-drafter agent. You take a feature from a rough idea to reviewed issues in four phases. Never move to the next phase without the user's yes.
+You are the orchestrator: you run in the user's session, talk to the user, and start the `feature-to-pr-factory:ticket-drafter` agent by that namespaced name, since a project may have its own `ticket-drafter`. You take a feature from a rough idea to reviewed issues in four phases, and move to the next phase only on the user's yes, because each phase builds on what they agreed in the last.
 
-## Model
-
-Planning deserves the strongest model, so this skill runs on Claude Opus 5.5. The `model: claude-opus-5-5` above switches to it for the turn that starts this skill; the override ends when the user sends the next message, so if the session runs another model, suggest `/model claude-opus-5-5` once at the start. The ticket-drafter pins its own model, so it runs on Opus 5.5 either way. Never pass `model` when you start it.
+Planning deserves a strong model: `model: claude-opus-5-5` above applies only to the turn that starts this skill, so if the session runs another model, suggest `/model claude-opus-5-5` once.
 
 ## Plan Mode
 
-Phases 1-3 only read and talk: you and the drafter never change files. Run them in plan mode.
+Phases 1-3 only read and talk, so they run in plan mode, and the user's approval of the plan is what lets Phase 4 create the issues.
 
-- **At the start:** if plan mode is off, call `EnterPlanMode`. If the user declines, continue, but change nothing before Phase 4.
-- **At the end of Phase 3:** write the locked tickets to the plan file and call `ExitPlanMode`. The user's approval ends plan mode and is the go-ahead for Phase 4, which creates the issues.
-
-## Agents
-
-| Agent | Model | Tools | Runs | Job |
-|---|---|---|---|---|
-| `feature-to-pr-factory:ticket-drafter` | `claude-opus-5-5` | Read, Grep, Glob, Skill (read-only) | in the background | Explores the codebase and drafts the tickets for the agreed plan |
-
-Start it by its namespaced name: a project may have its own agent called `ticket-drafter`.
+The hooks above enforce this: until the user approves the plan, every tool call outside plan mode is denied. So start with `EnterPlanMode` if plan mode is off. When the user approves the plan in the `ExitPlanMode` dialog, the hooks allow everything for the rest of the session.
 
 ## Phase 1: Brainstorm and Agree
 
@@ -41,6 +43,7 @@ Say: "**Phase 1: Brainstorm.** Let's work out what to build."
    - open questions
 4. **Iterate.** Discuss and revise the proposal until the user agrees with it.
 5. **Name it.** Give the plan a short kebab-case **scope name**, such as `order-cancellation`. It becomes the `scope:<name>` label that groups these tickets for the `build-prs-from-tickets` skill.
+6. **Write the plan file.** Write the agreed proposal, every decision, the scope name, the source issue's text, if any, and the implementation spec's path, if one exists, to the plan file. The drafter reads it from there, so it gets exactly what the user agreed.
 
 Example proposal:
 
@@ -62,14 +65,7 @@ Ask: "Shall I draft the tickets for this plan?"
 
 Say: "**Phase 2: Drafting.** ticket-drafter is exploring the codebase; I'll show the tickets when it is done."
 
-Start `feature-to-pr-factory:ticket-drafter` with:
-
-- the agreed proposal and every decision from Phase 1
-- the scope name
-- the issue text, if there is one
-- an implementation spec, if one exists
-
-End the prompt with: "Return the complete ticket breakdown."
+Start `feature-to-pr-factory:ticket-drafter` with the plan file's path and: "Return the complete ticket breakdown."
 
 ## Phase 3: Review One Ticket at a Time
 
@@ -79,12 +75,9 @@ Show one ticket, wait for feedback, then show the next:
 
 - **Approved:** lock it.
 - **Small change** (wording, a rename, a scope tweak): edit it, confirm the edit, then lock it.
-- **Wrong approach or missing context:** go back to Phase 1 or rerun Phase 2 with the correction.
+- **Wrong approach or missing context:** go back to Phase 1, or update the plan file and rerun Phase 2.
 
-When every ticket is locked:
-
-- **Plan mode on:** write the locked tickets to the plan file and call `ExitPlanMode`. Approval continues straight to Phase 4.
-- **Plan mode off:** ask "Create these N issues?" and wait for a yes.
+When every ticket is locked, add them to the plan file below the proposal and call `ExitPlanMode`. The user's approval continues straight to Phase 4.
 
 ## Phase 4: Create the Issues
 
@@ -97,7 +90,6 @@ When every ticket is locked:
 
 ## Rules
 
-- Propose before drafting, even when the request is detailed.
-- Never create issues without the user's explicit yes.
+- Propose before drafting, even when the request is detailed: the user's agreement is what the tickets are built on.
 - Give the drafter the agreed plan and decisions, not new design ideas of your own.
 - If the drafter fails, report the error and offer to retry.
