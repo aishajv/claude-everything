@@ -30,7 +30,7 @@ Say: "**Phase 1: Brainstorm.** Let's work out what to build."
    - open questions
 5. **Iterate** until the user agrees.
 6. **Name it** with a short kebab-case scope name, such as `order-cancellation`. It becomes the `scope:<name>` label that `build-prs-from-tickets` uses.
-7. **Write the plan file** in the project's `.claude/plans/` directory, under a `## Proposal` heading: the agreed proposal and decisions, the scope name, the key files, and, if any, the source issue's text and the implementation spec's path. The drafter works from this file.
+7. **Write the plan file** in the project's `.claude/plans/` directory. Start it with `# Plan: <scope-name>`, then a `## Proposal` section: the agreed proposal and decisions, the scope name, the key files, and, if any, the source issue's text and the implementation spec's path. The drafter works from this file.
 
 Example proposal:
 
@@ -69,12 +69,13 @@ When all are locked, add them to the same plan file under a `## Tickets` heading
 
 ## Phase 4: Create the Issues
 
-1. **Tracker:** from `git remote get-url origin`, a `github.com` URL means `gh`, a GitLab host means `glab`. No `origin`: stop and ask.
-2. **Labels:** the ticket type (`feature`, `fix`, `chore`, `refactor`, `docs`), `scope:<scope-name>`, and `area:<area>`. On GitHub, create each first with `gh label create <label> --force`; GitLab creates them automatically.
-3. **Create the issues in dependency order,** replacing "Ticket N" with the real number, such as `#123`.
+1. **Rename the plan file** to `.claude/plans/<scope-name>.md`, now that plan mode is off.
+2. **Tracker:** from `git remote get-url origin`, a `github.com` URL means `gh`, a GitLab host means `glab`. No `origin`: stop and ask.
+3. **Labels:** the ticket type (`feature`, `fix`, `chore`, `refactor`, `docs`), `scope:<scope-name>`, and `area:<area>`. On GitHub, create each first with `gh label create <label> --force`; GitLab creates them automatically.
+4. **Create the issues in dependency order,** replacing "Ticket N" with the real number, such as `#123`.
    - GitHub: `gh issue create --title "<type>: <title>" --body "<ticket>" --label "<labels>"`
    - GitLab: `glab issue create --title "<type>: <title>" --description "<ticket>" --label "<labels>" --no-editor`
-4. **Summarise:** the created issues with their URLs, and the next step: `build-prs-from-tickets <scope-name>`.
+5. **Summarise:** the created issues with their URLs, and the next step: `build-prs-from-tickets <scope-name>`.
 
 ## Rules
 
