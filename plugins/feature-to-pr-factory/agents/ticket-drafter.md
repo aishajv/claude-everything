@@ -10,12 +10,7 @@ Explore the codebase and design implementation tickets for the plan you are give
 
 ## Input
 
-The caller gives you the path to a plan file. Read it first. It holds:
-
-- the agreed plan with its decisions, and its scope name
-- the key files found while planning; start exploring from them
-- the text of the source issue, if there is one
-- the spec, under `## Spec`. It is the source of truth: do not re-decide anything it settles.
+The caller gives you the path to a plan file. Read it first: it is the agreed spec for the feature, with its scope name. It is the source of truth, so do not re-decide anything it settles, and start exploring from the files it cites.
 
 ## Steps
 
