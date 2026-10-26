@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 480" role="img" aria-labelledby="pt pd">
+  <title id="pt">plan-feature-into-tickets, phase by phase</title>
+  <desc id="pd">Phases 1 to 3 run in plan mode and only read and talk. Phase 1: the main agent starts three read-only explorer agents, asks questions, proposes a plan and saves it in the plan file. After your yes, Phase 2 starts ticket-drafter with the plan file's path; the drafter reads the plan and the code and replies once with every ticket. Phase 3 shows the tickets one at a time: small changes are edited by the main agent, big changes send the plan back to the drafter. After you approve the plan, plan mode ends and Phase 4 renames the plan file and creates the issues.</desc>
+  <defs>
+    <linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f1d1a"/>
+      <stop offset="1" stop-color="#141311"/>
+    </linearGradient>
+    <radialGradient id="pglow">
+      <stop offset="0" stop-color="#ffb08f"/>
+      <stop offset=".45" stop-color="#d97757"/>
+      <stop offset="1" stop-color="#d97757" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5a554d"/>
+    </marker>
+    <style>
+      .h { font: 700 26px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #f5f4ee; }
+      .p { font: 400 15px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #a8a397; }
+      .stage { font: 600 13px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #d97757; letter-spacing: .5px; }
+      .n { font: 600 15px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #f5f4ee; }
+      .s { font: 400 12.5px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #a8a397; }
+      .tag { font: 600 11px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #8f8a7e; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="480" rx="24" fill="url(#pbg)"/>
+
+  <text x="40" y="52" class="h">plan-feature-into-tickets</text>
+  <text x="40" y="78" class="p">From a rough idea to reviewed issues. Nothing changes until you approve the plan.</text>
+
+  <!-- plan mode frames -->
+  <rect x="30" y="112" width="852" height="300" rx="14" fill="none" stroke="#3a3732" stroke-dasharray="5 5"/>
+  <text x="34" y="104" class="stage">PLAN MODE ON · read and talk only</text>
+  <rect x="905" y="112" width="265" height="300" rx="14" fill="none" stroke="#3a3732" stroke-dasharray="5 5">
+    <animate attributeName="stroke" values="#3a3732;#3a3732;#8fc79a;#8fc79a;#3a3732" keyTimes="0;0.79;0.80;0.99;1" dur="14s" repeatCount="indefinite"/>
+  </rect>
+  <text x="909" y="104" class="stage">PLAN MODE OFF</text>
+
+  <!-- track along the top of the phase boxes -->
+  <line x1="165" y1="150" x2="1037" y2="150" stroke="#2f2c28" stroke-width="2"/>
+
+  <!-- subagent arrows -->
+  <path id="exDown" d="M 150 272 L 150 328" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path id="exUp" d="M 180 328 L 180 272" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="190" y="304" class="tag">key files</text>
+
+  <path id="drDown" d="M 415 272 L 415 328" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="405" y="304" text-anchor="end" class="tag">plan file path</text>
+  <path id="drUp" d="M 465 328 L 465 272" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="475" y="304" class="tag">every ticket, one reply</text>
+
+  <path id="redraft" d="M 690 272 L 690 362 L 553 362" fill="none" stroke="#5a554d" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+  <text x="700" y="324" class="tag">big change:</text>
+  <text x="700" y="340" class="tag">update plan, redraft</text>
+
+  <!-- phase boxes -->
+  <g>
+    <rect x="50" y="150" width="230" height="120" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.01;0.18;0.20;1" dur="14s" repeatCount="indefinite"/>
+    </rect>
+    <text x="70" y="184" class="n">1 · Brainstorm</text>
+    <text x="70" y="208" class="s">explore · ask · propose</text>
+    <text x="70" y="228" class="s">revise until you agree</text>
+    <text x="70" y="248" class="s">saves ## Proposal</text>
+  </g>
+  <g>
+    <rect x="330" y="150" width="220" height="120" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.20;0.21;0.45;0.47;1" dur="14s" repeatCount="indefinite"/>
+    </rect>
+    <text x="350" y="184" class="n">2 · Draft</text>
+    <text x="350" y="208" class="s">starts ticket-drafter</text>
+    <text x="350" y="228" class="s">waits for its one reply</text>
+    <text x="350" y="248" class="s">with every ticket</text>
+  </g>
+  <g>
+    <rect x="600" y="150" width="260" height="120" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.47;0.48;0.75;0.77;1" dur="14s" repeatCount="indefinite"/>
+    </rect>
+    <text x="620" y="184" class="n">3 · Review</text>
+    <text x="620" y="208" class="s">shows one ticket at a time</text>
+    <text x="620" y="228" class="s">small change: edits it itself</text>
+    <text x="620" y="248" class="s">saves ## Tickets</text>
+  </g>
+  <g>
+    <rect x="925" y="150" width="225" height="120" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#8fc79a;#8fc79a;#3a3732" keyTimes="0;0.79;0.80;0.99;1" dur="14s" repeatCount="indefinite"/>
+      <animate attributeName="fill" values="#2b2925;#2b2925;#22302a;#22302a;#2b2925" keyTimes="0;0.79;0.80;0.99;1" dur="14s" repeatCount="indefinite"/>
+    </rect>
+    <text x="945" y="184" class="n">4 · Create</text>
+    <text x="945" y="208" class="s">renames the plan file</text>
+    <text x="945" y="228" class="s">creates the issues</text>
+    <text x="945" y="248" class="s">next: build-prs-from-tickets</text>
+  </g>
+
+  <!-- subagents -->
+  <g>
+    <rect x="50" y="330" width="230" height="64" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.06;0.07;0.13;0.15;1" dur="14s" repeatCount="indefinite"/>
+    </rect>
+    <text x="165" y="358" text-anchor="middle" class="n">explorer agents ×3</text>
+    <text x="165" y="378" text-anchor="middle" class="s">features · architecture · tests</text>
+  </g>
+  <g>
+    <rect x="330" y="330" width="220" height="64" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.25;0.26;0.40;0.42;0.64;0.65;0.71;0.73;1" dur="14s" repeatCount="indefinite"/>
+    </rect>
+    <text x="440" y="358" text-anchor="middle" class="n">ticket-drafter</text>
+    <text x="440" y="378" text-anchor="middle" class="s">reads plan + code · read-only</text>
+  </g>
+
+  <!-- your two gates, on the track -->
+  <text x="305" y="132" text-anchor="middle" class="tag">you</text>
+  <rect x="285" y="139" width="40" height="22" rx="11" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+    <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.17;0.18;0.22;0.24;1" dur="14s" repeatCount="indefinite"/>
+  </rect>
+  <text x="305" y="154" text-anchor="middle" class="tag" style="fill:#f5f4ee">yes</text>
+  <text x="893" y="132" text-anchor="middle" class="tag">you</text>
+  <rect x="863" y="139" width="60" height="22" rx="11" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+    <animate attributeName="stroke" values="#3a3732;#3a3732;#8fc79a;#8fc79a;#3a3732;#3a3732" keyTimes="0;0.74;0.75;0.80;0.82;1" dur="14s" repeatCount="indefinite"/>
+  </rect>
+  <text x="893" y="154" text-anchor="middle" class="tag" style="fill:#f5f4ee">approve</text>
+
+  <!-- the work moving through the phases -->
+  <circle r="11" fill="url(#pglow)">
+    <animateMotion path="M 165 150 L 1037 150" keyPoints="0;0;0.3154;0.3154;0.6479;0.6479;1;1" keyTimes="0;0.18;0.21;0.45;0.48;0.75;0.80;1" calcMode="linear" dur="14s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- sparks: requests down to the subagents, replies back up -->
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="14s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.03;0.07;1" calcMode="linear"><mpath href="#exDown" xlink:href="#exDown"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.029;0.031;0.069;0.07;1" dur="14s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="14s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.13;0.17;1" calcMode="linear"><mpath href="#exUp" xlink:href="#exUp"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.129;0.131;0.169;0.17;1" dur="14s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="14s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.22;0.26;1" calcMode="linear"><mpath href="#drDown" xlink:href="#drDown"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.219;0.221;0.259;0.26;1" dur="14s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="14s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.40;0.44;1" calcMode="linear"><mpath href="#drUp" xlink:href="#drUp"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.399;0.401;0.439;0.44;1" dur="14s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#d97757" opacity="0">
+    <animateMotion dur="14s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.57;0.65;1" calcMode="linear"><mpath href="#redraft" xlink:href="#redraft"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.569;0.571;0.649;0.65;1" dur="14s" repeatCount="indefinite"/>
+  </circle>
+
+  <text x="40" y="450" class="p">Subagents never talk to you: they reply to the main agent, which shows you the result.</text>
+</svg>
