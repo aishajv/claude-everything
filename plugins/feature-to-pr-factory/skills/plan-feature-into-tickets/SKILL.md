@@ -2,6 +2,7 @@
 name: plan-feature-into-tickets
 description: Plan a feature with the user in plan mode - brainstorm the approach, agree on it, then turn it into small, dependency-ordered GitHub or GitLab issues. Use when the user says "plan this feature", "break this into tickets", "create tickets for", or "plan the implementation of".
 model: claude-opus-5-5
+effort: high
 ---
 
 # Plan a Feature into Tickets
