@@ -18,7 +18,7 @@ The caller gives you:
 
 ## Steps
 
-1. Use the Skill tool to load the project's installed test convention skill, for example `python-fastapi-test-conventions` in a Python/FastAPI project. Also read the project's CLAUDE.md.
+1. Use the Skill tool to load `python-fastapi-test-conventions`, and read the project's CLAUDE.md.
 2. Read each changed test file in full, inside the worktree path, and the fixtures and factories it uses.
 3. Check every changed test against the test rules, rule by rule.
 4. For each acceptance criterion, find the test that would fail if the criterion broke.
