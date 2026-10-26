@@ -61,7 +61,7 @@
         <set attributeName="opacity" to="1" begin="loop.begin+4.4s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
       <text y="118" class="mono line"><tspan class="ok">  ✓</tspan> installed, plus git-push-workflow
         <set attributeName="opacity" to="1" begin="loop.begin+5.8s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
-      <text y="144" class="mono line"><tspan class="acc">&gt;</tspan> /build-tickets-from-feature
+      <text y="144" class="mono line"><tspan class="acc">&gt;</tspan> /plan-feature-into-tickets
         <set attributeName="opacity" to="1" begin="loop.begin+7.2s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
       <text y="170" class="mono line"><tspan class="dim">  ticket-drafter</tspan>  drafting 3 tickets…
         <set attributeName="opacity" to="1" begin="loop.begin+8.6s"/><set attributeName="opacity" to="0" begin="loop.begin"/></text>
