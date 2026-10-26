@@ -29,11 +29,15 @@ Say: "**Phase 1: Brainstorm.** Let's work out what to build."
    - what is out of scope
    - open questions
 5. **Iterate** until the user agrees.
-6. **Write the spec.** Load the `implementation-spec` skill and follow it to turn the agreed proposal into a spec; if the user already has one, review it with the skill instead. Ask the user its unknowns until `## Unknowns` says `None`.
-7. **Name it** with a short kebab-case scope name, such as `order-cancellation`. It becomes the `scope:<name>` label that `build-prs-from-tickets` uses.
-8. **Write the plan file** in the project's `.claude/plans/` directory. Start it with `# Plan: <scope-name>`, then a `## Proposal` section: the agreed proposal and decisions, the scope name, the key files, and the source issue's text, if any. Add the spec below it under `## Spec`. The drafter works from this file.
+6. **Name it** with a short kebab-case scope name, such as `order-cancellation`. It becomes the `scope:<name>` label that `build-prs-from-tickets` uses.
+7. **Write the plan file** in the project's `.claude/plans/` directory, as a spec in the format of [references/spec-template.md](references/spec-template.md). Write only what the user agreed or the code settles:
+   - Name exact values: paths, field names and types, status and error codes, limits, timeouts.
+   - Cite the current file and symbol for each contract that changes.
+   - One fact per bullet, so each can become a ticket or a test.
+   - Anything still undecided goes under `## Unknowns`.
+8. **Close the unknowns.** Ask the user each one and write the answer into the section it affects, until `## Unknowns` says `None`. The drafter works from this file.
 
-Example proposal:
+Example proposal, in chat:
 
 ```markdown
 **Proposal: order-cancellation**
@@ -66,7 +70,7 @@ Show one ticket at a time and wait for feedback:
 - **Small change** (wording, a rename, a scope tweak): edit it, confirm, lock it.
 - **Wrong approach or missing context:** return to Phase 1, or update the plan file and rerun Phase 2.
 
-When all are locked, add them to the same plan file under a `## Tickets` heading, after `## Proposal`, and ask the user to approve the plan. Approval ends plan mode and starts Phase 4.
+When all are locked, add them at the end of the plan file under `## Tickets`, and ask the user to approve the plan. Approval ends plan mode and starts Phase 4.
 
 ## Phase 4: Create the Issues
 
