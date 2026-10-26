@@ -2,19 +2,6 @@
 name: plan-feature-into-tickets
 description: Plan a feature with the user in plan mode - brainstorm the approach, agree on it, then turn it into small, dependency-ordered GitHub or GitLab issues. Use when the user says "plan this feature", "break this into tickets", "create tickets for", or "plan the implementation of".
 model: claude-opus-5-5
-hooks:
-  PreToolUse:
-    - matcher: "*"
-      hooks:
-        - type: command
-          command: bash
-          args: ["${CLAUDE_PLUGIN_ROOT}/scripts/require-plan-mode.sh"]
-  PostToolUse:
-    - matcher: ExitPlanMode
-      hooks:
-        - type: command
-          command: bash
-          args: ["${CLAUDE_PLUGIN_ROOT}/scripts/require-plan-mode.sh", "approved"]
 ---
 
 # Plan a Feature into Tickets
@@ -27,7 +14,7 @@ Planning deserves a strong model: `model: claude-opus-5-5` above applies only to
 
 Phases 1-3 only read and talk, so they run in plan mode, and the user's approval of the plan is what lets Phase 4 create the issues.
 
-The hooks above enforce this: until the user approves the plan, every tool call outside plan mode is denied. So start with `EnterPlanMode` if plan mode is off. When the user approves the plan in the `ExitPlanMode` dialog, the hooks allow everything for the rest of the session.
+If plan mode is off at the start, call `EnterPlanMode` before anything else.
 
 ## Phase 1: Brainstorm and Agree
 
