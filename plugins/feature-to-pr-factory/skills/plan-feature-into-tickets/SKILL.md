@@ -7,7 +7,7 @@ effort: high
 
 # Plan a Feature into Tickets
 
-Work in plan mode. If it is off, call `EnterPlanMode` before anything else: Phases 1-3 only read and talk, and the user's approval of the plan is what lets Phase 4 create the issues.
+Work in plan mode, and switch it on before anything else if it is off: Phases 1-3 only read and talk, and the user's approval of the plan is what lets Phase 4 create the issues.
 
 You are the orchestrator: you run in the user's session, talk to the user, and start the `feature-to-pr-factory:ticket-drafter` agent by that namespaced name, since a project may have its own `ticket-drafter`. You take a feature from a rough idea to reviewed issues in four phases, and move to the next phase only on the user's yes, because each phase builds on what they agreed in the last.
 
@@ -16,7 +16,7 @@ You are the orchestrator: you run in the user's session, talk to the user, and s
 Say: "**Phase 1: Brainstorm.** Let's work out what to build."
 
 1. **Understand.** Ask what to build, fix, or change, and why. If the user gives an issue URL, read it with its comments: `gh issue view <number> --comments` or `glab issue view <number> --comments`. Ask about behaviour and business rules in the user's words, not about implementation.
-2. **Explore.** For a small change, read the code yourself. Otherwise start 2-3 built-in `Explore` agents in parallel, each looking from one angle:
+2. **Explore.** For a small change, or if you cannot start agents, read the code yourself. Otherwise start 2-3 read-only explorer agents in parallel, each looking from one angle:
    - **Similar features:** how the codebase already does something close to this.
    - **Architecture:** the layers and modules the feature touches, and how data moves through them.
    - **Tests and conventions:** how this area is tested and organised.
@@ -53,7 +53,7 @@ Ask: "Shall I draft the tickets for this plan?" Start Phase 2 only on a clear ye
 
 Say: "**Phase 2: Drafting.** ticket-drafter is exploring the codebase; I'll show the tickets when it is done."
 
-Start `feature-to-pr-factory:ticket-drafter` with the plan file's path and: "Return the complete ticket breakdown."
+Start `feature-to-pr-factory:ticket-drafter` with the plan file's path and: "Return the complete ticket breakdown." If you cannot start agents, do its job yourself by following this plugin's `agents/ticket-drafter.md`.
 
 ## Phase 3: Review One Ticket at a Time
 
@@ -65,7 +65,7 @@ Show one ticket, wait for feedback, then show the next:
 - **Small change** (wording, a rename, a scope tweak): edit it, confirm the edit, then lock it.
 - **Wrong approach or missing context:** go back to Phase 1, or update the plan file and rerun Phase 2.
 
-When every ticket is locked, add them to the plan file below the proposal and call `ExitPlanMode`. The user's approval continues straight to Phase 4.
+When every ticket is locked, add them to the plan file below the proposal and ask the user to approve the plan. Their approval ends plan mode and continues straight to Phase 4.
 
 ## Phase 4: Create the Issues
 
