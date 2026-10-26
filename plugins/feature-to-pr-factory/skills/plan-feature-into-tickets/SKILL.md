@@ -30,7 +30,7 @@ Say: "**Phase 1: Brainstorm.** Let's work out what to build."
    - open questions
 5. **Iterate** until the user agrees.
 6. **Name it** with a short kebab-case scope name, such as `order-cancellation`. It becomes the `scope:<name>` label that `build-prs-from-tickets` uses.
-7. **Write the plan file** in the project's `.claude/plans/` directory, as a spec in the format of [references/spec-template.md](references/spec-template.md). Write only what the user agreed or the code settles:
+7. **Write the plan file** in the project's `.claude/plans/` directory, as a spec that covers at least the sections in [references/spec-template.md](references/spec-template.md); add anything else that helps. Write only what the user agreed or the code settles:
    - Name exact values: paths, field names and types, status and error codes, limits, timeouts.
    - Cite the current file and symbol for each contract that changes.
    - One fact per bullet, so each can become a ticket or a test.
