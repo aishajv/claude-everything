@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 400" role="img" aria-labelledby="bt bd">
+  <title id="bt">build-prs-from-tickets, step by step</title>
+  <desc id="bd">For each ticket, several at once: ticket-implementer builds it in its own worktree while a hook runs make test (max 3 tries). When it is done, code-reviewer and test-reviewer check it at the same time; critical issues go back to the implementer, at most 2 fix rounds. A clean ticket is pushed as a stacked PR on GitHub. You merge, and the PRs above it are restacked onto main.</desc>
+  <defs>
+    <linearGradient id="bbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1f1d1a"/>
+      <stop offset="1" stop-color="#141311"/>
+    </linearGradient>
+    <radialGradient id="bglow">
+      <stop offset="0" stop-color="#ffb08f"/>
+      <stop offset=".45" stop-color="#d97757"/>
+      <stop offset="1" stop-color="#d97757" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="barrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5a554d"/>
+    </marker>
+    <style>
+      .h { font: 700 26px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #f5f4ee; }
+      .p { font: 400 15px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #a8a397; }
+      .stage { font: 600 13px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #d97757; letter-spacing: .5px; }
+      .n { font: 600 15px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #f5f4ee; }
+      .m { font: 600 14px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #f5f4ee; }
+      .s { font: 400 13px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #a8a397; }
+      .tag { font: 600 11px ui-monospace, "SF Mono", Menlo, Consolas, monospace; fill: #8f8a7e; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="400" rx="24" fill="url(#bbg)"/>
+
+  <text x="40" y="52" class="h">build-prs-from-tickets</text>
+  <text x="40" y="78" class="p">Each ticket becomes a reviewed, tested, stacked PR. You merge.</text>
+
+  <rect x="30" y="112" width="1140" height="250" rx="14" fill="none" stroke="#3a3732" stroke-dasharray="5 5"/>
+  <text x="34" y="104" class="stage">FOR EACH TICKET · several at once</text>
+
+  <line x1="165" y1="150" x2="1037" y2="150" stroke="#2f2c28" stroke-width="2"/>
+
+  <!-- arrows to the helpers below each step -->
+  <path id="tDown" d="M 150 232 L 150 278" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#barrow)"/>
+  <path id="tUp" d="M 180 278 L 180 232" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#barrow)"/>
+  <path id="rDown" d="M 425 232 L 425 278" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#barrow)"/>
+  <path id="rUp" d="M 455 278 L 455 232" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#barrow)"/>
+  <path id="sDown" d="M 1037 232 L 1037 278" fill="none" stroke="#5a554d" stroke-width="1.5" marker-end="url(#barrow)"/>
+  <!-- review loop: critical issues back to the implementer -->
+  <path id="fixBack" d="M 350 232 Q 305 268 262 234" fill="none" stroke="#d97757" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#barrow)"/>
+
+  <!-- steps -->
+  <g>
+    <rect x="50" y="150" width="230" height="80" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#d97757;#d97757;#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.01;0.22;0.24;0.45;0.46;0.49;0.50;1" dur="12s" repeatCount="indefinite"/>
+    </rect>
+    <text x="70" y="182" class="n">1 · Implement</text>
+    <text x="70" y="208" class="s">builds it in its own worktree</text>
+  </g>
+  <g>
+    <rect x="330" y="150" width="220" height="80" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.24;0.25;0.50;0.52;1" dur="12s" repeatCount="indefinite"/>
+    </rect>
+    <text x="350" y="182" class="n">2 · Review</text>
+    <text x="350" y="208" class="s">two reviewers at once</text>
+  </g>
+  <g>
+    <rect x="600" y="150" width="260" height="80" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.52;0.53;0.70;0.72;1" dur="12s" repeatCount="indefinite"/>
+    </rect>
+    <text x="620" y="182" class="n">3 · Push</text>
+    <text x="620" y="208" class="s">stacked PR on GitHub</text>
+  </g>
+  <g>
+    <rect x="925" y="150" width="225" height="80" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#8fc79a;#8fc79a;#3a3732" keyTimes="0;0.74;0.75;0.99;1" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="fill" values="#2b2925;#2b2925;#22302a;#22302a;#2b2925" keyTimes="0;0.74;0.75;0.99;1" dur="12s" repeatCount="indefinite"/>
+    </rect>
+    <text x="945" y="182" class="n">4 · Merged ✅</text>
+    <text x="945" y="208" class="s">by you, on main</text>
+  </g>
+
+  <!-- helpers -->
+  <g>
+    <rect x="50" y="280" width="230" height="56" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.09;0.10;0.15;0.17;1" dur="12s" repeatCount="indefinite"/>
+    </rect>
+    <text x="165" y="305" text-anchor="middle" class="m">hook: make test</text>
+    <text x="165" y="324" text-anchor="middle" class="s">must pass · max 3 tries</text>
+  </g>
+  <g>
+    <rect x="330" y="280" width="220" height="56" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.30;0.31;0.38;0.40;1" dur="12s" repeatCount="indefinite"/>
+    </rect>
+    <text x="440" y="303" text-anchor="middle" class="m">code-reviewer</text>
+    <text x="440" y="324" text-anchor="middle" class="m">test-reviewer</text>
+  </g>
+  <g>
+    <rect x="925" y="280" width="225" height="56" rx="12" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+      <animate attributeName="stroke" values="#3a3732;#3a3732;#8fc79a;#8fc79a;#3a3732;#3a3732" keyTimes="0;0.84;0.85;0.95;0.97;1" dur="12s" repeatCount="indefinite"/>
+    </rect>
+    <text x="1037" y="305" text-anchor="middle" class="m">restack</text>
+    <text x="1037" y="324" text-anchor="middle" class="s">PRs above move onto main</text>
+  </g>
+
+  <!-- pills on the track -->
+  <rect x="283" y="139" width="44" height="22" rx="11" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+    <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.21;0.22;0.25;0.27;1" dur="12s" repeatCount="indefinite"/>
+  </rect>
+  <text x="305" y="154" text-anchor="middle" class="tag" style="fill:#f5f4ee">DONE</text>
+  <rect x="553" y="139" width="44" height="22" rx="11" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+    <animate attributeName="stroke" values="#3a3732;#3a3732;#d97757;#d97757;#3a3732;#3a3732" keyTimes="0;0.49;0.50;0.53;0.55;1" dur="12s" repeatCount="indefinite"/>
+  </rect>
+  <text x="575" y="154" text-anchor="middle" class="tag" style="fill:#f5f4ee">clean</text>
+  <rect x="855" y="139" width="76" height="22" rx="11" fill="#2b2925" stroke="#3a3732" stroke-width="1.5">
+    <animate attributeName="stroke" values="#3a3732;#3a3732;#8fc79a;#8fc79a;#3a3732;#3a3732" keyTimes="0;0.69;0.70;0.75;0.77;1" dur="12s" repeatCount="indefinite"/>
+  </rect>
+  <text x="893" y="154" text-anchor="middle" class="tag" style="fill:#f5f4ee">you merge</text>
+
+  <text x="40" y="386" class="tag">critical issues go back to the same implementer · max 2 fix rounds · anything stuck comes to you</text>
+
+  <!-- the ticket moving through the steps -->
+  <circle r="11" fill="url(#bglow)">
+    <animateMotion path="M 165 150 L 1037 150" keyPoints="0;0;0.3154;0.3154;0.6479;0.6479;1;1" keyTimes="0;0.22;0.25;0.50;0.53;0.70;0.75;1" calcMode="linear" dur="12s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- sparks -->
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.06;0.10;1" calcMode="linear"><mpath href="#tDown" xlink:href="#tDown"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.059;0.061;0.099;0.10;1" dur="12s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.14;0.18;1" calcMode="linear"><mpath href="#tUp" xlink:href="#tUp"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.139;0.141;0.179;0.18;1" dur="12s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.26;0.30;1" calcMode="linear"><mpath href="#rDown" xlink:href="#rDown"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.259;0.261;0.299;0.30;1" dur="12s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#ffb08f" opacity="0">
+    <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.38;0.42;1" calcMode="linear"><mpath href="#rUp" xlink:href="#rUp"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.379;0.381;0.419;0.42;1" dur="12s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#d97757" opacity="0">
+    <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.42;0.46;1" calcMode="linear"><mpath href="#fixBack" xlink:href="#fixBack"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.419;0.421;0.459;0.46;1" dur="12s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#8fc79a" opacity="0">
+    <animateMotion dur="12s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.79;0.84;1" calcMode="linear"><mpath href="#sDown" xlink:href="#sDown"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.789;0.791;0.839;0.84;1" dur="12s" repeatCount="indefinite"/>
+  </circle>
+</svg>
