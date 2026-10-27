@@ -45,6 +45,20 @@ Domain (entities, exceptions, business rules)
 
 Violating these boundaries is the most common source of untestable code. A service that imports `HTTPException` or a repository that raises `UserNotFoundError` are both wrong.
 
+### Separate service and repository ownership
+
+Services may import repositories from `persistence/repositories/` and receive them through
+constructors. This dependency does not permit declaring repository classes, query logic, or
+repository protocols in service files. Keep each service file focused on its service class.
+For a single persistence implementation, inject the concrete repository; `Mock(spec=Repository)`
+already supports service tests without an extra protocol. Domain owns business entities and
+rules, not repository interfaces. If multiple implementations require an interface, establish
+its separate module and dependency direction before implementation.
+
+Read `references/layer-rules.md` when choosing class ownership or imports. If a ticket prescribes
+a conflicting placement, flag and reconcile it before coding; do not copy a conflicting existing
+pattern as precedent.
+
 ### End-to-End: Creating a Resource
 
 Here is how a `POST /api/catalog/products` request flows through all four layers:
