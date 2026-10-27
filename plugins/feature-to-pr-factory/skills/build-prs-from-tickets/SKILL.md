@@ -41,11 +41,11 @@ Stages: ⏳ waiting for a dependency · 🔨 implementing · 🔍 in review · �
 
 A ticket is **ready** when it has no dependencies, one dependency with an open or merged PR, or several dependencies that are all merged. Its **base** is the dependency's branch while that is unmerged, otherwise the default branch.
 
-Start an implementer for every ready ticket at once, so they run in parallel, with the full ticket, the issue number, and the base. If one reports BLOCKED, mark it ⛔ and ask the user: guide it, skip the ticket and its dependents, or stop.
+Start a `feature-to-pr-factory:ticket-implementer` subagent for every ready ticket at once, so they run in parallel, with the full ticket, the issue number, and the base. If one reports BLOCKED, mark it ⛔ and ask the user: guide it, skip the ticket and its dependents, or stop.
 
 ## Phase 3: Review
 
-As soon as a ticket is DONE, start both reviewers at once. Begin each prompt with `Ticket #<issue>`, then give the worktree path, the diff (`git -C <worktree> diff origin/<base>...HEAD`), and the acceptance criteria.
+As soon as a ticket is DONE, start the `feature-to-pr-factory:code-reviewer` and `feature-to-pr-factory:test-reviewer` subagents at once. Begin each prompt with `Ticket #<issue>`, then give the worktree path, the diff (`git -C <worktree> diff origin/<base>...HEAD`), and the acceptance criteria.
 
 - **No CRITICAL issues:** go to Phase 4.
 - **CRITICAL issues:** send them from both reports as one list to the same implementer, then review again. After two fix rounds, mark the ticket ⛔ and ask the user. A hook blocks a 4th review of the same ticket.
