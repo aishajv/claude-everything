@@ -21,7 +21,7 @@
   def import_order(self, order: NewOrder) -> None:
       ...
   ```
-- **Normalize once, at ingestion** - normalize values when they enter the system (for example `email.strip().lower()`) and store the normalized form. Downstream code never normalizes again.
+- **Normalize once, at ingestion** - normalize values when they enter the system (for example `email.strip().lower()`) and store the normalized form. Downstream code never normalizes again. Keep normalization rules as data loaded from config, not as hardcoded replacement lists.
 - **One casing on the wire** - Python code and the database use `snake_case`. If API clients need `camelCase`, convert only at the API boundary with the model config, and never send both formats:
   ```python
   from pydantic import BaseModel, ConfigDict
