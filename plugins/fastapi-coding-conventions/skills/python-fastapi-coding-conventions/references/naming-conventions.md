@@ -6,6 +6,7 @@
 - **Domain entities:** No prefix/postfix (`Tenant`, `User`)
 - **ORM models:** `ORM` postfix (`TenantORM`, `UserORM`)
 - **Service classes:** `Service` postfix (`UserService`, `TenantService`)
+- **One copy of each utility function** - if two modules need slightly different behaviour, add a parameter to the shared function instead of copying it.
 
 ## Method Naming by Layer
 

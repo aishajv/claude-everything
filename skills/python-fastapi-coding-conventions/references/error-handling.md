@@ -10,4 +10,18 @@
 - **Minimize try/except blocks** - don't wrap code in try/except defensively. Only catch exceptions at boundaries where you need to transform them (e.g., external API error → typed service exception, raised with `from e`). Trust internal code. If a DB query fails, let it bubble up as a 500 through the global handler.
 - **Never add defensive try/except for things that can't fail** - e.g., don't wrap `UUID(claims.sub)` in try/except when `claims` comes from an auth token that was already verified. YAGNI applies to error handling too.
 - **Never fail silently** - no silent `return` on error conditions in any layer. If something unexpected happens (missing data, no matching record when one is expected), raise an exception. Silent returns hide bugs and make debugging impossible, especially in background jobs where there's no HTTP response to surface the problem.
+- **Never use defaults to mask failures** - if an external call fails, let the error surface. Never `except: return <default>`: a failure is not a default value.
+  ```python
+  # Bad - swallows the failure; the caller thinks the score is 0.0
+  def get_score(item_id: UUID) -> float:
+      try:
+          return external_api.score(item_id)
+      except ExternalAPIError:
+          return 0.0
+
+  # Good - the error reaches the caller
+  def get_score(item_id: UUID) -> float:
+      return external_api.score(item_id)
+  ```
+- **Keep the error's type and context** - raise a specific exception with structured fields, such as `StorageError` or `LLMError`. Never wrap an error in a generic `Exception(f"Failed: {e}")`: that loses its type.
 - **One error response shape** - the global handler is the only place that builds error responses, and it always returns the same JSON shape, for example `{"error": {"code": "product_not_found", "message": "Product not found"}}`. Clients then handle every error the same way.
