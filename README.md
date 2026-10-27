@@ -59,10 +59,11 @@ Install any of them the same way:
 
 `feature-to-pr-factory` has two orchestrator skills that talk to you and hand the focused work to agents. One feature goes in; reviewed, tested pull requests come out.
 
-<p align="center"><img src="assets/pr-factory-flow.svg" alt="Animated PR factory: a feature flows through ticket-drafter and issues, then ticket-implementer, whose test loop Claude Code runs; code-reviewer and test-reviewer check each ticket in parallel and the orchestrator sends their critical issues back to the implementer; out comes one stacked PR per ticket, which you merge" width="100%"></p>
+<p align="center"><img src="assets/pr-factory-flow.svg" alt="Animated PR factory: a feature becomes a spec agreed with you, then flows through ticket-drafter and issues, then ticket-implementer, whose test loop Claude Code runs; code-reviewer and test-reviewer check each ticket in parallel and the orchestrator sends their critical issues back to the implementer; out comes one stacked PR per ticket, which you merge" width="100%"></p>
 
+- **Plan first:** you and Claude agree on a spec in plan mode; `ticket-drafter` turns it into small tickets you review one by one.
 - **Tests, forced by Claude Code:** a Stop hook runs `make test` whenever `ticket-implementer` tries to finish. It cannot finish until the tests pass; after 3 failed attempts it reports BLOCKED and you decide.
-- **Review, run by the orchestrator:** `code-reviewer` and `test-reviewer` check each ticket in parallel. The orchestrator sends their critical issues back to the same implementer, at most twice, then asks you.
+- **Review, run by the orchestrator:** `code-reviewer` and `test-reviewer` check each ticket in parallel. The orchestrator sends their critical issues back to the same implementer, at most twice, then asks you; a hook blocks any further review.
 - **You merge:** each ticket becomes its own PR, stacked on the one it depends on, and the orchestrator keeps the stack rebased as you merge.
 
 See the [plugin README](plugins/feature-to-pr-factory/README.md) for the full walkthrough.
