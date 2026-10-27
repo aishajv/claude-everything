@@ -17,7 +17,7 @@ feature-to-pr-factory
 │     brainstorms the plan with you, reviews tickets with you, creates the issues
 │     └── calls: ticket-drafter
 │
-└── build-prs-from-tickets       (orchestrator skill, Sonnet 5.5)
+└── build-prs-from-tickets       (orchestrator skill)
       pulls the issues, coordinates the agents, keeps the PR stack rebased
       └── calls: ticket-implementer, code-reviewer, test-reviewer
 ```
@@ -37,22 +37,25 @@ The thinking happens upstream: the drafter writes exact tickets, so a fast, chea
 plugins/feature-to-pr-factory/
 ├── .claude-plugin/plugin.json      name, version, depends on git-push-workflow
 ├── skills/
-│   ├── plan-feature-into-tickets/  feature → tickets → issues
+│   ├── plan-feature-into-tickets/  feature → spec → tickets → issues
+│   │   └── references/             spec template: what every plan covers
 │   └── build-prs-from-tickets/     issues → reviewed, tested, stacked PRs
 ├── agents/
 │   ├── ticket-drafter.md           drafts the tickets (read-only)
 │   ├── ticket-implementer.md       implements one ticket in its own worktree
 │   ├── code-reviewer.md            reviews the code (read-only)
 │   └── test-reviewer.md            reviews the tests (read-only)
-├── hooks/hooks.json                runs the test hook when ticket-implementer finishes
-└── scripts/run-tests-before-done.sh  make test must pass before ticket-implementer can finish
+├── hooks/hooks.json                registers the two hooks below
+└── scripts/
+    ├── run-tests-before-done.sh    make test must pass before ticket-implementer can finish
+    └── limit-review-rounds.sh      at most 3 reviews per ticket
 ```
 
 ## The two stages
 
 **1. `plan-feature-into-tickets`**
 
-<p align="center"><img src="assets/plan-feature-into-tickets.svg" alt="Animated plan-feature-into-tickets flow: in plan mode, Phase 1 brainstorms with explorer agents and saves the proposal; after your yes, Phase 2 sends the plan file path to ticket-drafter, which replies once with every ticket; Phase 3 reviews the tickets one at a time and sends big changes back to the drafter; after you approve, plan mode ends and Phase 4 renames the plan file and creates the issues" width="100%"></p>
+<p align="center"><img src="assets/plan-feature-into-tickets.svg" alt="Animated plan-feature-into-tickets flow: in plan mode, Phase 1 brainstorms with explorer agents and saves the plan as a spec; after your yes, Phase 2 sends the plan file path to ticket-drafter, which replies once with every ticket; Phase 3 reviews the tickets one at a time and sends big changes back to the drafter; after you approve, plan mode ends and Phase 4 renames the plan file and creates the issues" width="100%"></p>
 
 1. Brainstorm with you: the skill reads the code, proposes an approach with options and a recommendation, and revises it until you agree. The plan gets a name, such as `order-cancellation`, and is saved as a spec: exact API, data, failure, and test details, with every open question answered.
 2. `ticket-drafter` reads the code and drafts dependency-ordered tickets.
@@ -63,7 +66,7 @@ Steps 1-3 run in plan mode. When the tickets are locked, the skill shows them in
 
 **2. `build-prs-from-tickets`**
 
-1. Pull the issues labelled `scope:<name>` and show the board.
+1. Pull the issues labelled `scope:<name>` and show the status board: one line per ticket with its stage, such as 🔨 implementing or 👀 PR open.
 2. `ticket-implementer` builds each ready ticket in its own git worktree, several in parallel.
 3. `code-reviewer` and `test-reviewer` check it at the same time; the orchestrator sends their CRITICAL issues to the same implementer as one list, at most twice.
 4. The implementer pushes and opens a PR: against `main`, or stacked on the branch its ticket depends on, so each PR shows only its own changes.
@@ -74,9 +77,9 @@ Two loops keep the work honest:
 | Loop | Between | How |
 |---|---|---|
 | **Tests** | Claude Code and the implementer | A `SubagentStop` hook runs `make test` whenever the implementer tries to finish. Failing tests send it back to fix them; after 3 failed attempts it reports BLOCKED and you decide |
-| **Review** | The orchestrator and the implementer | Both reviewers report to the orchestrator, which sends the CRITICAL issues back to the same implementer. After 2 fix rounds you decide |
+| **Review** | The orchestrator and the implementer | Both reviewers report to the orchestrator, which sends the CRITICAL issues back to the same implementer. After 2 fix rounds you decide; a `PreToolUse` hook blocks a 4th review of the same ticket |
 
-The orchestrator prints a status board on every change, so you always see which tickets are implementing, in review, waiting for you, or merged.
+The status board is updated on every change, so you always see which tickets are implementing, in review, waiting for you, or merged.
 
 ## Install
 
@@ -92,6 +95,6 @@ The orchestrator prints a status board on every change, so you always see which 
 - `gh` (GitHub) or `glab` (GitLab), logged in; the tracker is detected from the `origin` remote
 - A `make test` target that runs the project's tests (for example `poetry run pytest`)
 - A `.worktreeinclude` file listing gitignored files the tests need, such as `.env`, so every agent worktree gets them
-- `jq`, used by the test hook and the GitLab merge watch
+- `jq`, used by both hooks
 - The commands the agents run allowed in your settings (`make test`, `git *`, and `gh pr *` or `glab mr *`); otherwise every background agent stops at a permission prompt in your session
 - Branch protection on `main` in GitHub or GitLab; the plugin does not guard `main` itself
