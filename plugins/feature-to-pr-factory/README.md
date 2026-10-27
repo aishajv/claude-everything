@@ -55,7 +55,7 @@ plugins/feature-to-pr-factory/
 
 **1. `plan-feature-into-tickets`**
 
-<p align="center"><img src="assets/plan-feature-into-tickets.svg" alt="Animated plan-feature-into-tickets flow: in plan mode, Phase 1 brainstorms with explorer agents and saves the plan as a spec; after your yes, Phase 2 sends the plan file path to ticket-drafter, which replies once with every ticket; Phase 3 reviews the tickets one at a time and sends big changes back to the drafter; after you approve, plan mode ends and Phase 4 renames the plan file and creates the issues" width="100%"></p>
+<p align="center"><img src="assets/plan-feature-into-tickets.svg" alt="Animated plan-feature-into-tickets flow: in plan mode, you and three explorer agents turn the idea into a spec; after your yes, ticket-drafter writes the tickets; you check each one; after you approve, plan mode ends and the issues are pushed to GitHub" width="100%"></p>
 
 1. Brainstorm with you: the skill reads the code, proposes an approach with options and a recommendation, and revises it until you agree. The plan gets a name, such as `order-cancellation`, and is saved as a spec: exact API, data, failure, and test details, with every open question answered.
 2. `ticket-drafter` reads the code and drafts dependency-ordered tickets.
@@ -96,5 +96,5 @@ The status board is updated on every change, so you always see which tickets are
 - A `make test` target that runs the project's tests (for example `poetry run pytest`)
 - A `.worktreeinclude` file listing gitignored files the tests need, such as `.env`, so every agent worktree gets them
 - `jq`, used by both hooks
-- The commands the agents run allowed in your settings (`make test`, `git *`, and `gh pr *` or `glab mr *`); otherwise every background agent stops at a permission prompt in your session
+- The commands the agents run allowed in your settings (`make test`, `git *`, and `gh pr *`, `gh issue *`, `gh label *`, or the `glab` equivalents); otherwise every background agent stops at a permission prompt in your session
 - Branch protection on `main` in GitHub or GitLab; the plugin does not guard `main` itself
