@@ -66,6 +66,8 @@ Steps 1-3 run in plan mode. When the tickets are locked, the skill shows them in
 
 **2. `build-prs-from-tickets`**
 
+<p align="center"><img src="assets/build-prs-from-tickets.svg" alt="Animated build-prs-from-tickets flow: for each ticket, several at once, ticket-implementer builds it in its own worktree while a hook makes make test pass; code-reviewer and test-reviewer check it at the same time and critical issues go back to the implementer, at most twice; the clean ticket is pushed as a stacked PR; you merge and the PRs above it are restacked onto main" width="100%"></p>
+
 1. Pull the issues labelled `scope:<name>` and show the status board: one line per ticket with its stage, such as 🔨 implementing or 👀 PR open.
 2. `ticket-implementer` builds each ready ticket in its own git worktree, several in parallel.
 3. `code-reviewer` and `test-reviewer` check it at the same time; the orchestrator sends their CRITICAL issues to the same implementer as one list, at most twice.
