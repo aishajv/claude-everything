@@ -18,11 +18,11 @@ The agents change code, so plan mode must be off. If it is on, ask the user to s
 
 ## Agents
 
-| Agent | Model | Tools | Runs | Job |
-|---|---|---|---|---|
+| Agent                                      | Model              | Tools                                      | Runs                                       | Job                                                                                                              |
+|--------------------------------------------|--------------------|--------------------------------------------|--------------------------------------------|------------------------------------------------------------------------------------------------------------------|
 | `feature-to-pr-factory:ticket-implementer` | `claude-haiku-5-5` | Bash, Read, Write, Edit, Grep, Glob, Skill | in its own git worktree, in the background | Implements one ticket, pushes, and restacks when told. Its Stop hook makes `make test` pass before it can finish |
-| `feature-to-pr-factory:code-reviewer` | `claude-opus-5-5` | Read, Grep, Glob, Skill (read-only) | in the background | Checks the code against the coding rules and every acceptance criterion |
-| `feature-to-pr-factory:test-reviewer` | `claude-opus-5-5` | Read, Grep, Glob, Skill (read-only) | in the background | Checks the tests against the test rules and that every acceptance criterion has a test |
+| `feature-to-pr-factory:code-reviewer`      | `claude-opus-5-5`  | Read, Grep, Glob, Skill (read-only)        | in the background                          | Checks the code against the coding rules and every acceptance criterion                                          |
+| `feature-to-pr-factory:test-reviewer`      | `claude-opus-5-5`  | Read, Grep, Glob, Skill (read-only)        | in the background                          | Checks the tests against the test rules and that every acceptance criterion has a test                           |
 
 Start agents only by these exact names: a project may have its own agents with the same short names.
 
@@ -35,22 +35,22 @@ On every stage change, print one line saying what happened, then the full board:
 
 Scope: order-cancellation    3 tickets    1 merged · 1 PR open · 1 implementing
 
-| Ticket | Title                   | Stage                 | Review     | PR  |
-|--------|-------------------------|-----------------------|------------|-----|
-| #55    | Add cancellation fields | ✅ merged             | 0C 1M · r1 | #61 |
-| #56    | Add OrderService.cancel | 👀 PR open (on main)  | 0C 0M · r2 | #62 |
-| #57    | Add cancel endpoint     | 🔨 implementing       | -          | -   |
+| Ticket | Title                   | Stage                | Review     | PR  |
+|--------|-------------------------|----------------------|------------|-----|
+| #55    | Add cancellation fields | ✅ merged            | 0C 1M · r1 | #61 |
+| #56    | Add OrderService.cancel | 👀 PR open (on main) | 0C 0M · r2 | #62 |
+| #57    | Add cancel endpoint     | 🔨 implementing      | -          | -   |
 ```
 
-| Stage | Meaning |
-|---|---|
-| ⏳ waiting | A dependency has no PR yet |
-| 🔨 implementing | The implementer is working, including its test loop |
-| 🔍 review r1, r2, r3 | Both reviewers are checking it; the round number |
+| Stage                    | Meaning                                                                                                                                  |
+|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| ⏳ waiting               | A dependency has no PR yet                                                                                                               |
+| 🔨 implementing          | The implementer is working, including its test loop                                                                                      |
+| 🔍 review r1, r2, r3     | Both reviewers are checking it; the round number                                                                                         |
 | 👀 PR open (on `<base>`) | Waiting for the user. Merge a PR only when it shows **on main**: a PR stacked on another branch moves to main once that branch is merged |
-| ✅ merged | Done |
-| ⛔ blocked | Waiting for the user's decision |
-| ⏭ skipped | Will not be built |
+| ✅ merged                | Done                                                                                                                                     |
+| ⛔ blocked               | Waiting for the user's decision                                                                                                          |
+| ⏭ skipped               | Will not be built                                                                                                                        |
 
 "Review" shows the CRITICAL and MINOR counts of the last review and its round.
 
@@ -129,12 +129,12 @@ If the session ends before that, running this skill again on the same scope pick
 
 ## Edge Cases
 
-| Case | Handling |
-|---|---|
-| No open issues with the scope label | Report it and stop |
-| A dependency cycle, or a dependency that is neither in the scope nor closed | Report it and stop |
-| A ticket has no acceptance criteria | Warn in Phase 1; the reviewers check the rules only |
-| Worktree creation fails | Run `git worktree prune`, report the error, and offer to retry |
-| A restack hits a conflict | The implementer reports BLOCKED; mark it ⛔ and ask the user |
-| An agent times out | Report it and offer to retry, skip, or stop |
-| Every remaining ticket is ⛔ or waiting on one | Stop and report all reasons |
+| Case                                                                        | Handling                                                       |
+|-----------------------------------------------------------------------------|----------------------------------------------------------------|
+| No open issues with the scope label                                         | Report it and stop                                             |
+| A dependency cycle, or a dependency that is neither in the scope nor closed | Report it and stop                                             |
+| A ticket has no acceptance criteria                                         | Warn in Phase 1; the reviewers check the rules only            |
+| Worktree creation fails                                                     | Run `git worktree prune`, report the error, and offer to retry |
+| A restack hits a conflict                                                   | The implementer reports BLOCKED; mark it ⛔ and ask the user   |
+| An agent times out                                                          | Report it and offer to retry, skip, or stop                    |
+| Every remaining ticket is ⛔ or waiting on one                              | Stop and report all reasons                                    |
