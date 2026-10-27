@@ -145,7 +145,7 @@ Test pyramid, conventions, and rules for the backend codebase.
   def test_list_users():
   ```
 
-- **One assertion per test** where practical
+- **One behavior per test** — use all assertions needed to prove the outcome and required interactions.
 
 - **Test directory mirrors source:**
 
@@ -194,7 +194,8 @@ Test pyramid, conventions, and rules for the backend codebase.
 - **Assert error details** — verify error messages/codes, not just status codes
 
 - **Assert elements explicitly** — prefer list comparison or index-based assertions over set comprehensions,
-  which lose ordering and hide duplicates.
+  which lose ordering and hide duplicates. For exact collection results, check complete ordered
+  contents or combine indexed assertions with lengths, including nested collections.
 
   ```python
   # Bad — set comprehension loses order, hides duplicates
@@ -203,12 +204,30 @@ Test pyramid, conventions, and rules for the backend codebase.
   # Bad — just checking length, doesn't verify content
   assert len(users) == 2
 
-  # Good — explicit, ordered, catches wrong data
+  # Good — exact length and ordered contents
+  assert len(users) == 2
   assert users[0].name == "Alice"
   assert users[1].name == "Bob"
   ```
 
-- **No unnecessary intermediate variables** — assert inline
+- **Name expected data when it improves readability** — local factory objects and collections can make
+  arrange/act/assert clearer. Prefer assertions against named expected data over a mock's `return_value`;
+  keep simple assertions inline when an extra name adds no meaning. Preserve the contract's collection type.
+
+  ```python
+  lesson = LessonFactory.build()
+  repository = Mock(spec=LessonRepository)
+  repository.get_lesson.return_value = lesson
+  service = LessonService(repository)
+
+  assert service.get_lesson(1) is lesson
+  repository.get_lesson.assert_called_once_with(1)
+  ```
+
+- **Assert the return contract** — identity against a known domain object or full value equality already
+  rejects `None`; do not add redundant non-None checks. Test missing-data behavior separately:
+  repositories return `None`, while services raise the specified domain exception. Use identity only
+  when returning the same object is part of the contract; otherwise compare values.
 
 - **Never create variables just to avoid repeating literals** — repetition is clarity
 

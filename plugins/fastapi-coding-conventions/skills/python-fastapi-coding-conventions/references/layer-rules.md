@@ -53,6 +53,10 @@
 - **Contains:** Use-case logic, calls to repositories, domain rule invocation
 - **Must NOT contain:** HTTP/request logic, framework types, raw SQL/ORM models, business truth (stays in domain), dataclasses or data structures (those go in `domain/entities/`)
 - **Dependencies:** Services → Domain, Services → Persistence
+- **Dependency is not ownership** - importing and injecting a persistence repository is allowed;
+  declaring a repository implementation or repository protocol inside a service file is not.
+  Keep repository definitions under `persistence/repositories/`. For one implementation, use the
+  concrete repository as the constructor type and mock spec; do not add a protocol just for tests.
 
 ### DOs
 - **Organise by bounded context** - `services/identity/`, `services/catalog/`, one file per entity within the context
