@@ -45,10 +45,10 @@ Start an implementer for every ready ticket at once, so they run in parallel, wi
 
 ## Phase 3: Review
 
-As soon as a ticket is DONE, start both reviewers at once with the worktree path, the diff (`git -C <worktree> diff origin/<base>...HEAD`), and the acceptance criteria.
+As soon as a ticket is DONE, start both reviewers at once. Begin each prompt with `Ticket #<issue>`, then give the worktree path, the diff (`git -C <worktree> diff origin/<base>...HEAD`), and the acceptance criteria.
 
 - **No CRITICAL issues:** go to Phase 4.
-- **CRITICAL issues:** send them from both reports as one list to the same implementer, then review again. After two fix rounds, mark the ticket ⛔ and ask the user.
+- **CRITICAL issues:** send them from both reports as one list to the same implementer, then review again. After two fix rounds, mark the ticket ⛔ and ask the user. A hook blocks a 4th review of the same ticket.
 
 ## Phase 4: Push
 

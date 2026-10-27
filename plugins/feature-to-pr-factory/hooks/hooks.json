@@ -7,7 +7,23 @@
           {
             "type": "command",
             "command": "bash",
-            "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/run-tests-before-done.sh"]
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/run-tests-before-done.sh"
+            ]
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/limit-review-rounds.sh"
+            ]
           }
         ]
       }
