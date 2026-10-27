@@ -6,6 +6,10 @@ Turn one feature into GitHub or GitLab issues, then turn each issue into its own
 one feature  ──►  several tickets (issues)  ──►  one stacked PR per ticket
 ```
 
+<p align="center"><img src="../../assets/pr-factory-flow.svg" alt="Animated PR factory overview: a feature becomes a spec agreed with you, ticket-drafter turns it into issues, then ticket-implementer builds each ticket while Claude Code runs make test; code-reviewer and test-reviewer check it in parallel and critical issues go back to the implementer; out comes one stacked PR per ticket, which you merge" width="100%"></p>
+
+The two stages below zoom into each half of this picture.
+
 ## How it works
 
 Two **orchestrator skills** run in your Claude session, talk to you, and start **subagents** for the focused work. Subagents never talk to you; they report back to the skill.
